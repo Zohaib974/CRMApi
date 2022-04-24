@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/CRMContracts/bin/Debug/netcoreapp3.1
+/CRMContracts/obj
+/CRMEntities/bin/Debug/netcoreapp3.1
+/CRMEntities/obj
+/CRMRepository/bin/Debug/netcoreapp3.1
+/CRMRepository/obj
+/CRMServices/bin/Debug/netcoreapp3.1
+/CRMServices/obj
+/CRMWebHost/bin/Debug/netcoreapp3.1
+/CRMWebHost/obj
+/LoggerService/bin/Debug/netcoreapp3.1
+/LoggerService/obj/Debug/netcoreapp3.1
+/LoggerService/obj/Release/netcoreapp3.1
