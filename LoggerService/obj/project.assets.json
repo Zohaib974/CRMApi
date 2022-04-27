@@ -5603,11 +5603,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj",
+      "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
       "projectName": "LoggerService",
-      "projectPath": "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj",
+      "projectPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "D:\\MyProjects\\Work\\CRM\\LoggerService\\obj\\",
+      "outputPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -5629,8 +5629,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj": {
-              "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj"
+            "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj": {
+              "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj"
             }
           }
         }

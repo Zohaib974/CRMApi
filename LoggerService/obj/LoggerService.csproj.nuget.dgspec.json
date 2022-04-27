@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj": {}
+    "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj": {}
   },
   "projects": {
-    "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj": {
+    "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj",
+        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj",
         "projectName": "CRMContracts",
-        "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj",
+        "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Work\\CRM\\CRMContracts\\obj\\",
+        "outputPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -33,11 +33,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\MyProjects\\Work\\CRM\\CRMEntities\\CRMEntities.csproj": {
-                "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMEntities\\CRMEntities.csproj"
+              "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj": {
+                "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj"
               },
-              "D:\\MyProjects\\Work\\CRM\\CRMServices\\CRMServices.csproj": {
-                "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMServices\\CRMServices.csproj"
+              "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj": {
+                "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj"
               }
             }
           }
@@ -70,14 +70,14 @@
         }
       }
     },
-    "D:\\MyProjects\\Work\\CRM\\CRMEntities\\CRMEntities.csproj": {
+    "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Work\\CRM\\CRMEntities\\CRMEntities.csproj",
+        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj",
         "projectName": "CRMEntities",
-        "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMEntities\\CRMEntities.csproj",
+        "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Work\\CRM\\CRMEntities\\obj\\",
+        "outputPath": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -155,14 +155,14 @@
         }
       }
     },
-    "D:\\MyProjects\\Work\\CRM\\CRMServices\\CRMServices.csproj": {
+    "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Work\\CRM\\CRMServices\\CRMServices.csproj",
+        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj",
         "projectName": "CRMServices",
-        "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMServices\\CRMServices.csproj",
+        "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Work\\CRM\\CRMServices\\obj\\",
+        "outputPath": "D:\\MyProjects\\Other\\CRM\\CRMServices\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -220,14 +220,14 @@
         }
       }
     },
-    "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj": {
+    "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj",
+        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
         "projectName": "LoggerService",
-        "projectPath": "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj",
+        "projectPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Work\\CRM\\LoggerService\\obj\\",
+        "outputPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -249,8 +249,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj": {
-                "projectPath": "D:\\MyProjects\\Work\\CRM\\CRMContracts\\CRMContracts.csproj"
+              "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj": {
+                "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj"
               }
             }
           }

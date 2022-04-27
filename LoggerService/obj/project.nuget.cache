@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UdemXQF/eGT2R5PCWKpijGPxHAZnguvdAd1PeKi7QsnmseAxFtXLLuaT0dHvJIQJEAyMWOPPqPGJ3zCZnA1+IQ==",
+  "dgSpecHash": "82ml3kiX+OLvoosmlZKd7kDAFyrTZIKAd9mxKRoYpqonp/3JTmiUk/tSECMMQ8FB44HtkLvHw1CZLIRTIGxEdw==",
   "success": true,
-  "projectFilePath": "D:\\MyProjects\\Work\\CRM\\LoggerService\\LoggerService.csproj",
+  "projectFilePath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.16\\microsoft.aspnetcore.cryptography.internal.5.0.16.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.16\\microsoft.aspnetcore.cryptography.keyderivation.5.0.16.nupkg.sha512",
