@@ -19,6 +19,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CRMRepository;
+using CRMContracts.Email;
+using EmailService.Configuration;
+using EmailService;
 
 namespace CRMWebHost
 {
@@ -50,7 +53,10 @@ namespace CRMWebHost
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
             services.ConfigureSwagger();
+            services.ConfigureDataProtectionToken(Configuration);
 
+            services.AddTransient<IEmailConfiguration, EmailConfiguration>();
+            services.AddTransient<IEmailService, EmailServiceImplementation>();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();

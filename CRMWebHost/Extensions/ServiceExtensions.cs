@@ -166,5 +166,10 @@ namespace CRMWebHost.Extensions
                 });
             });
         }
+
+        public static void ConfigureDataProtectionToken(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>opt.TokenLifespan = TimeSpan.FromHours(2));
+        }
     }
 }

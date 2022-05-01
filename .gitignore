@@ -16,3 +16,5 @@
 /LoggerService/bin/Debug/netcoreapp3.1
 /LoggerService/obj/Debug/netcoreapp3.1
 /LoggerService/obj/Release/netcoreapp3.1
+/EmailService/obj
+/EmailService/bin/Debug/netcoreapp3.1
