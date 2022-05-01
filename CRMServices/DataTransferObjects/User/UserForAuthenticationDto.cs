@@ -9,5 +9,4 @@ namespace CRMServices.DataTransferObjects
         [Required(ErrorMessage = "Password name is required")]
         public string Password { get; set; }
     }
-
 }

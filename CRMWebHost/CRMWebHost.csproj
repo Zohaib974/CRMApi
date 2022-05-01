@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CRMRepository\CRMRepository.csproj" />
     <ProjectReference Include="..\CRMServices\CRMServices.csproj" />
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 </Project>
