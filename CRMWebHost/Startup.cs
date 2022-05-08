@@ -22,6 +22,7 @@ using CRMRepository;
 using CRMContracts.Email;
 using EmailService.Configuration;
 using EmailService;
+using Microsoft.AspNetCore.Identity;
 
 namespace CRMWebHost
 {
@@ -63,6 +64,11 @@ namespace CRMWebHost
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;  //Model validations in response
+            });
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                // enables immediate logout, after updating the user's stat.
+                options.ValidationInterval = TimeSpan.Zero;
             });
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers(config =>
