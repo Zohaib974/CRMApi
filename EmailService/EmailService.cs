@@ -67,7 +67,7 @@ namespace EmailService
             int emailPort = string.IsNullOrEmpty(_mailSettings.Port) ? 80 : int.Parse(_mailSettings.Port);
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse("zohaib@croem.net"));
+            email.To.Add(MailboxAddress.Parse(model.Recipient.Email));
             email.Subject = model.Subject;
             var builder = new BodyBuilder();
             if (model.Attachments != null)
