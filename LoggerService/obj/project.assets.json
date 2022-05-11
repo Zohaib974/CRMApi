@@ -1461,7 +1461,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "CRMEntities": "1.0.0",
-          "CRMServices": "1.0.0"
+          "CRMModels": "1.0.0"
         },
         "compile": {
           "bin/placeholder/CRMContracts.dll": {}
@@ -1485,17 +1485,17 @@
           "bin/placeholder/CRMEntities.dll": {}
         }
       },
-      "CRMServices/1.0.0": {
+      "CRMModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "bin/placeholder/CRMServices.dll": {}
+          "bin/placeholder/CRMModels.dll": {}
         },
         "runtime": {
-          "bin/placeholder/CRMServices.dll": {}
+          "bin/placeholder/CRMModels.dll": {}
         }
       }
     }
@@ -5583,10 +5583,10 @@
       "path": "../CRMEntities/CRMEntities.csproj",
       "msbuildProject": "../CRMEntities/CRMEntities.csproj"
     },
-    "CRMServices/1.0.0": {
+    "CRMModels/1.0.0": {
       "type": "project",
-      "path": "../CRMServices/CRMServices.csproj",
-      "msbuildProject": "../CRMServices/CRMServices.csproj"
+      "path": "../CRMModels/CRMModels.csproj",
+      "msbuildProject": "../CRMModels/CRMModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5596,25 +5596,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lenovo\\.nuget\\packages\\": {},
+    "C:\\Users\\ZK\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
+      "projectUniqueName": "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\LoggerService.csproj",
       "projectName": "LoggerService",
-      "projectPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
-      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\obj\\",
+      "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\LoggerService.csproj",
+      "packagesPath": "C:\\Users\\ZK\\.nuget\\packages\\",
+      "outputPath": "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ZK\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5629,8 +5629,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj": {
-              "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj"
+            "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj": {
+              "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj"
             }
           }
         }
@@ -5660,6 +5660,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.10, 3.1.10]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"

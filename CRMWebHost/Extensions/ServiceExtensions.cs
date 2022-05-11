@@ -2,6 +2,7 @@
 using CRMEntities;
 using CRMEntities.Models;
 using CRMRepository;
+using CRMServices.Implementation;
 using CRMWebHost.Configurations;
 using LoggerService;
 using Marvin.Cache.Headers;
@@ -62,6 +63,9 @@ namespace CRMWebHost.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
                            services.AddScoped<IRepositoryManager, RepositoryManager>();
 
+        //Configure service manager
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+                           services.AddScoped<IServiceManager, ServiceManager>();
         //Configure custom output formatter
         public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
                             builder.AddMvcOptions(config => config.OutputFormatters.Add(new

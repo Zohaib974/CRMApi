@@ -1,5 +1,5 @@
 using CRMContracts;
-using CRMServices.DataTransferObjects;
+using CRMModels.DataTransfersObjects;
 using CRMRepository.DataShaping;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Extensions;
@@ -47,6 +47,7 @@ namespace CRMWebHost
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryManager();
+            services.ConfigureServiceManager();
             services.ConfigureVersioning(); 
             //services.ConfigureResponseCaching();
             //services.ConfigureHttpCacheHeaders();

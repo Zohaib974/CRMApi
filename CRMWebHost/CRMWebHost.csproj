@@ -16,6 +16,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CRMModels\CRMModels.csproj" />
     <ProjectReference Include="..\CRMRepository\CRMRepository.csproj" />
     <ProjectReference Include="..\CRMServices\CRMServices.csproj" />
     <ProjectReference Include="..\EmailService\EmailService.csproj" />

@@ -1,4 +1,4 @@
-﻿using CRMServices.DataTransferObjects;
+﻿using CRMModels.DataTransfersObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;

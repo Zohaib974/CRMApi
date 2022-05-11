@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CRMContracts;
-using CRMServices.DataTransferObjects;
+using CRMModels.DataTransfersObjects;
 using CRMEntities.Models;
-using CRMServices.RequestFeatures;
+using CRMModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;

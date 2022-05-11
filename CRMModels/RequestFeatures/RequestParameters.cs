@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace CRMServices.RequestFeatures
+﻿namespace CRMModels
 {
     public abstract class RequestParameters
     {

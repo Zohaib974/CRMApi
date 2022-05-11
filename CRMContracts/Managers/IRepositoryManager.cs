@@ -8,5 +8,4 @@ namespace CRMContracts
         IEmployeeRepository Employee { get; }
         Task SaveAsync();
     }
-
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CRMServices.DataTransferObjects
+namespace CRMModels.DataTransfersObjects
 {
     public class EmployeeDto
     {
@@ -9,5 +9,4 @@ namespace CRMServices.DataTransferObjects
         public int Age { get; set; }
         public string Position { get; set; }
     }
-
 }

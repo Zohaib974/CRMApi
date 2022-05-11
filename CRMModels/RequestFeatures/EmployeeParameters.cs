@@ -1,4 +1,4 @@
-﻿namespace CRMServices.RequestFeatures
+﻿namespace CRMModels
 {
     public class EmployeeParameters : RequestParameters
     {
@@ -13,5 +13,4 @@
         public string SearchTerm { get; set; }
 
     }
-
 }

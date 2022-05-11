@@ -1,4 +1,6 @@
-﻿namespace CRMServices.DataTransferObjects
+﻿using System.Text;
+
+namespace CRMModels.DataTransfersObjects
 {
     public class EmployeeForUpdateDto
     {
@@ -6,5 +8,4 @@
         public int Age { get; set; }
         public string Position { get; set; }
     }
-
 }
