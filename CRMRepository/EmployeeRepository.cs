@@ -1,7 +1,7 @@
 ﻿using CRMContracts;
 using CRMEntities;
 using CRMEntities.Models;
-using CRMServices.RequestFeatures;
+using CRMModels;
 using CRMRepository.Extensions;
 using System;
 using System.Collections.Generic;

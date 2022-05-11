@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace CRMServices.DataTransferObjects
+namespace CRMModels.DataTransfersObjects
 {
     public class EmployeeForCreationDto
     {
@@ -9,5 +10,4 @@ namespace CRMServices.DataTransferObjects
         public int Age { get; set; }
         public string Position { get; set; }
     }
-
 }

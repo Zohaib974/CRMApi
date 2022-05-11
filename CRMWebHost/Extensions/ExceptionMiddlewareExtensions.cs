@@ -1,5 +1,5 @@
 ﻿using CRMContracts;
-using CRMServices.ErrorModels;
+using CRMModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;

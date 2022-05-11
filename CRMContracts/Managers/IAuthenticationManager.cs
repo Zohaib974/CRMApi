@@ -1,4 +1,5 @@
-﻿using CRMServices.DataTransferObjects;
+﻿using CRMModels;
+using CRMModels.DataTransfersObjects;
 using System.Threading.Tasks;
 
 namespace CRMContracts

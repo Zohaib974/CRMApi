@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
-namespace CRMServices.DataTransferObjects
+namespace CRMModels.DataTransfersObjects
 {
     public class ResetPasswordDto
     {

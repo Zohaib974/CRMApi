@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace CRMServices.DataTransferObjects
+namespace CRMModels.DataTransfersObjects
 {
     public class CompanyForCreationDto
     {
@@ -12,5 +10,4 @@ namespace CRMServices.DataTransferObjects
         public IEnumerable<EmployeeForCreationDto> Employees { get; set; }
 
     }
-
 }

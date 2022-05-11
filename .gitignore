@@ -18,3 +18,5 @@
 /LoggerService/obj/Release/netcoreapp3.1
 /EmailService/obj
 /EmailService/bin/Debug/netcoreapp3.1
+/CRMModels/bin/Debug/netcoreapp3.1
+/CRMModels/obj

@@ -2,7 +2,7 @@
 using CRMContracts;
 using CRMContracts.Email;
 using CRMEntities.Models;
-using CRMServices.DataTransferObjects;
+using CRMModels.DataTransfersObjects;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Extensions;
 using EmailService.Models;

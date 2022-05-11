@@ -1,6 +1,7 @@
 ﻿using CRMContracts;
 using CRMEntities.Models;
-using CRMServices.DataTransferObjects;
+using CRMModels;
+using CRMModels.DataTransfersObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

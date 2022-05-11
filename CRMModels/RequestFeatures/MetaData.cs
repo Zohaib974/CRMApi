@@ -1,4 +1,4 @@
-﻿namespace CRMServices.RequestFeatures
+﻿namespace CRMModels
 {
     public class MetaData
     {
@@ -9,5 +9,4 @@
         public bool HasPrevious => CurrentPage > 1;
         public bool HasNext => CurrentPage < TotalPages;
     }
-
 }

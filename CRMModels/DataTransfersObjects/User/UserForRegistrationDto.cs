@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace CRMServices.DataTransferObjects
+namespace CRMModels.DataTransfersObjects
 {
-     public class UserForRegistrationDto
+    public class UserForRegistrationDto
     {
         public string FullName { get; set; }
         [Required(ErrorMessage = "Username is required")]
@@ -18,5 +17,4 @@ namespace CRMServices.DataTransferObjects
         public string PhoneNumber { get; set; }
         public ICollection<string> Roles { get; set; }
     }
-
 }
