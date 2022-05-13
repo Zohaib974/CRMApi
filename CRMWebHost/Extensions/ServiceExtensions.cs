@@ -7,6 +7,7 @@ using CRMWebHost.Configurations;
 using LoggerService;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -100,7 +101,7 @@ namespace CRMWebHost.Extensions
         //Configure Asp Identity
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<User>(o =>
+            var builder = services.AddIdentity<User,UserRole>(o =>
             {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
@@ -111,6 +112,7 @@ namespace CRMWebHost.Extensions
             });
             builder = new IdentityBuilder(builder.UserType, typeof(UserRole), builder.Services);
             IdentityBuilder identityBuilder = builder.AddEntityFrameworkStores<RepositoryContext>()
+                                                    .AddSignInManager<ApplicationSignInManager>()
                                                     .AddDefaultTokenProviders();
         }
 
@@ -119,8 +121,10 @@ namespace CRMWebHost.Extensions
             var jwtSettings = configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>
             {
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             })
             .AddJwtBearer(options =>
             {
@@ -182,10 +186,10 @@ namespace CRMWebHost.Extensions
             services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(expiredInHours));
         }
     }
-    //public class ApplicationSignInManager : SignInManager<User>
-    //{
-    //    public ApplicationSignInManager(UserManager<User> userManager, IHttpContextAccessor contextAccessor, IUserClaimsPrincipalFactory<User> claimsFactory, IOptions<IdentityOptions> optionsAccessor, ILogger<SignInManager<User>> logger, IAuthenticationSchemeProvider schemes, IUserConfirmation<User> confirmation) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
-    //    {
-    //    }
-    //}
+    public class ApplicationSignInManager : SignInManager<User>
+    {
+        public ApplicationSignInManager(UserManager<User> userManager, IHttpContextAccessor contextAccessor, IUserClaimsPrincipalFactory<User> claimsFactory, IOptions<IdentityOptions> optionsAccessor, ILogger<SignInManager<User>> logger, IAuthenticationSchemeProvider schemes, IUserConfirmation<User> confirmation) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
+        {
+        }
+    }
 }

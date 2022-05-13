@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CRMContracts\CRMContracts.csproj" />
+    <ProjectReference Include="..\CRMHelper\CRMHelper.csproj" />
   </ItemGroup>
 
 </Project>

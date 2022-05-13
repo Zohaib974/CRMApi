@@ -4,14 +4,16 @@ using CRMEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRMEntities.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20220512070813_addedContactEntity")]
+    partial class addedContactEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,9 +163,6 @@ namespace CRMEntities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OfficeNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfileImageLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")

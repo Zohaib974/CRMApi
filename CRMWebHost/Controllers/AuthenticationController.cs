@@ -26,10 +26,10 @@ namespace CRMWebHost.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IAuthenticationManager _authManager;
-        //private readonly ApplicationSignInManager _signInManager;
+        private readonly ApplicationSignInManager _signInManager;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
-        public AuthenticationController(ILoggerManager logger, IMapper mapper, IEmailService emailService, IConfiguration configuration, 
+        public AuthenticationController(ILoggerManager logger, IMapper mapper, IEmailService emailService, IConfiguration configuration, ApplicationSignInManager signInManager,
                                        UserManager<User> userManager, IAuthenticationManager authManager)
         {
             _logger = logger;
@@ -38,7 +38,7 @@ namespace CRMWebHost.Controllers
             _authManager = authManager;
             _emailService = emailService;
             _configuration = configuration;
-            //_signInManager = signInManager;
+            _signInManager = signInManager;
         }
         [HttpPost ("signup")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -68,13 +68,12 @@ namespace CRMWebHost.Controllers
                 _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong username or password.");
                 return Unauthorized();
             }
-            //var signInResult = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
-
-            //if (!signInResult.Succeeded)
-            //{
-            //    _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong username or password.");
-            //    return Unauthorized();
-            //}
+            var signInResult = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
+            if (!signInResult.Succeeded)
+            {
+                _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong username or password.");
+                return Unauthorized();
+            }
             return Ok(new {isSuccess = true,message ="Login successful.", Token = await _authManager.CreateToken() });
         }
         [HttpPost("forgetPassword")]
@@ -128,6 +127,11 @@ namespace CRMWebHost.Controllers
             var applicationUser = await _userManager.GetUserAsync(User);
             await _userManager.UpdateSecurityStampAsync(applicationUser);
             return Ok(new { isSuccess = true, message = "Logged out." });
+        }
+        [HttpGet("accessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return Unauthorized();
         }
     }
 }

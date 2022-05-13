@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CRMContracts;
 using CRMEntities.Models;
+using CRMHelper;
 using CRMModels.DataTransfersObjects;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,23 @@ namespace CRMServices.Implementation
             _mapper = mapper;
             _repositoryManager = repositoryManager;
         }
-        // public CompanyDto CreateCompany(CompanyForCreationDto company)
-        //{
-        //    var companyEntity = _mapper.Map<Company>(company);
-        //    _repositoryManager.Company.CreateCompany(companyEntity);
-        //    _repositoryManager.SaveAsync();
-        //    return _mapper.Map<CompanyDto>(companyEntity);
-        //}
+        public async Task<ContactDto> CreateContactAsync(CreateContactDto contact)
+        {
+            var response = new ContactDto();
+            try
+            {
+                var contactEntity = _mapper.Map<Contact>(contact);
+                _repositoryManager.Contact.CreateContact(contactEntity);
+                await _repositoryManager.SaveAsync();
+                response = _mapper.Map<ContactDto>(contactEntity);
+                response.Successful = true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                response.Message = "Contact Creation Failed,Error : " + ex.Message;
+            }
+            return response;
+        }
     }
 }
