@@ -23,6 +23,10 @@ using CRMContracts.Email;
 using EmailService.Configuration;
 using EmailService;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using CRMEntities.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace CRMWebHost
 {
@@ -53,13 +57,15 @@ namespace CRMWebHost
             //services.ConfigureHttpCacheHeaders();
             services.AddAuthentication();
             services.ConfigureIdentity();
+            services.ConfigureDataProtectionToken(Configuration);
             services.ConfigureJWT(Configuration);
             services.ConfigureSwagger();
-            services.ConfigureDataProtectionToken(Configuration);
 
             services.AddTransient<IEmailConfiguration, EmailConfiguration>();
             services.AddTransient<IEmailService, EmailServiceImplementation>();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+            services.AddHttpContextAccessor();
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
             services.Configure<ApiBehaviorOptions>(options =>

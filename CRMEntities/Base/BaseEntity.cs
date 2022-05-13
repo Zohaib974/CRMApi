@@ -11,7 +11,6 @@ namespace CRMEntities.Base
         protected BaseEntity()
         {
             CreatedOn = DateTime.UtcNow;
-            ModifiedOn = DateTime.UtcNow;
         }
         public long CreatedBy { get; set; }
         public long? ModifiedBy { get; set; }

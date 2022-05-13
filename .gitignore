@@ -20,3 +20,5 @@
 /EmailService/bin/Debug/netcoreapp3.1
 /CRMModels/bin/Debug/netcoreapp3.1
 /CRMModels/obj
+/CRMHelper/obj
+/CRMHelper/bin/Debug/netcoreapp3.1

@@ -1,9 +1,10 @@
 ﻿using CRMModels.DataTransfersObjects;
+using System.Threading.Tasks;
 
 namespace CRMContracts
 {
     public interface IServiceManager
     {
-       // public CompanyDto CreateCompany(CompanyForCreationDto company);
+        public Task<ContactDto> CreateContactAsync(CreateContactDto contact);
     }
 }
