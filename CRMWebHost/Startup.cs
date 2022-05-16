@@ -27,6 +27,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using CRMEntities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 namespace CRMWebHost
 {
@@ -89,7 +91,9 @@ namespace CRMWebHost
                 //config.Filters.Add(new GlobalFilterExample());   For GlobalAction filters
 
             }).AddXmlDataContractSerializerFormatters()    //enable XML response type
-              .AddCustomCSVFormatter();                    //custom response formatter
+              .AddCustomCSVFormatter()                  //custom response formatter
+               .AddJsonOptions(options =>
+                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

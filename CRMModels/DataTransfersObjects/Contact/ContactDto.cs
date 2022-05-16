@@ -1,10 +1,18 @@
 ﻿using CRMModels.Common;
+using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CRMModels.DataTransfersObjects
 {
     public class ContactDto : CommonResponse
     {
+        public ContactDto()
+        {
+            SalesRep = "David Miller"; //to be added in future
+        }
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -23,6 +31,11 @@ namespace CRMModels.DataTransfersObjects
         public string OfficeNumber { get; set; }
         //Additional Details
         public int Status { get; set; }
+        public ContactStatusEnum ContactStatus { get
+            {
+                return (ContactStatusEnum)Status;
+            }
+        }
         public string DisplayName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -43,5 +56,13 @@ namespace CRMModels.DataTransfersObjects
         public string RelatedContacts { get; set; }
         public string AssignedTeamMembers { get; set; }
         public string Tags { get; set; }
+    }
+    public class ContactListDto
+    {
+        public ContactListDto()
+        {
+            list = new List<ContactListDto>();
+        }
+        public List<ContactListDto> list { get; set; }
     }
 }

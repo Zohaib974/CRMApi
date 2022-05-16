@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CRMContracts;
 using CRMEntities.Models;
+using CRMModels;
 using CRMModels.DataTransfersObjects;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Base;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,12 +49,8 @@ namespace CRMWebHost.Controllers
         }
         [HttpPost("addContact")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<ContactDto> Create([FromForm]CreateContactDto contact)
+        public async Task<ContactDto> AddContact([FromForm]CreateContactDto contact)
         {
-            //var user = User;
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var userName = User.FindFirstValue(ClaimTypes.Name);
-
             var files = HttpContext.Request.Form.Files;
             var profileImgePath = _configuration.GetSection("ProfileImageFolderPath").Value;
             var path = Path.Combine("", _hostingEnvironment.ContentRootPath + profileImgePath);
@@ -61,6 +59,13 @@ namespace CRMWebHost.Controllers
             var response =await _serviceManager.CreateContactAsync(contact);
             return response;
         }
+        [HttpGet("listContacts")]
+        public IActionResult ListContacts([FromQuery] ContactParameters contactParameters)
+        {
+            var response =  _serviceManager.GetContacts(contactParameters);
+            return Ok(response);
+        }
+        #region Private Methods
         private string UploadFiles(string path,IFormFileCollection files)
         {
             if (files != null && files.Count > 0)
@@ -78,5 +83,6 @@ namespace CRMWebHost.Controllers
             }
             return path;
         }
+        #endregion
     }
 }

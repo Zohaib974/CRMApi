@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CRMModels.Common;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace CRMModels.DataTransfersObjects
 {
@@ -29,7 +32,10 @@ namespace CRMModels.DataTransfersObjects
         public string HomeNumber { get; set; }
         public string OfficeNumber { get; set; }
         //Additional Details
-        public int Status { get; set; }
+        [Required]
+        [EnumDataType(typeof(ContactStatusEnum))]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ContactStatusEnum ContactStatus { get; set; }
         [MaxLength(60, ErrorMessage = "Maximum length for the DisplayName is 60 characters.")]
         public string DisplayName { get; set; }
         [Required]
@@ -53,6 +59,7 @@ namespace CRMModels.DataTransfersObjects
         public string RelatedContacts { get; set; }
         public string AssignedTeamMembers { get; set; }
         public string Tags { get; set; }
+        [Required]
         public IFormFile File { get; set; }
     }
 }

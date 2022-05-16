@@ -2,6 +2,8 @@
 using CRMContracts;
 using CRMEntities.Models;
 using CRMHelper;
+using CRMModels;
+using CRMModels.Common;
 using CRMModels.DataTransfersObjects;
 using System;
 using System.Collections.Generic;
@@ -27,16 +29,27 @@ namespace CRMServices.Implementation
             try
             {
                 var contactEntity = _mapper.Map<Contact>(contact);
+                contactEntity.Status = (int)contact.ContactStatus;
                 _repositoryManager.Contact.CreateContact(contactEntity);
                 await _repositoryManager.SaveAsync();
                 response = _mapper.Map<ContactDto>(contactEntity);
                 response.Successful = true;
+                response.Message = "Contact created successfully.";
             }
             catch(Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                response.Message = "Contact Creation Failed,Error : " + ex.Message;
+                response.Message = "Contact creation failed.Error : " + ex.Message;
             }
+            return response;
+        }
+
+        public CommmonListResponse<ContactDto> GetContacts(ContactParameters contactParameters)
+        {
+            var repoRespose = _repositoryManager.Contact.GetContacts(contactParameters,false);
+            var listContacts = _mapper.Map <List<ContactDto>>(repoRespose);
+            var response = new CommmonListResponse<ContactDto>(listContacts, repoRespose.MetaData.TotalCount, 
+                                                    repoRespose.MetaData.CurrentPage, repoRespose.MetaData.PageSize);
             return response;
         }
     }
