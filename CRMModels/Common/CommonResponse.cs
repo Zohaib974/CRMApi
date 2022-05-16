@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace CRMModels.Common
 {
     public class CommonResponse
     {
-        //public CommonResponse(bool success, string message)
-        //{
-        //    Successful = success;
-        //    Message = message;
-        //}
         public bool Successful { get; set; }
         public string Message { get; set; }
 
