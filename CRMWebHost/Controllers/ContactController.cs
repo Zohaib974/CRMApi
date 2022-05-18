@@ -2,6 +2,7 @@
 using CRMContracts;
 using CRMEntities.Models;
 using CRMModels;
+using CRMModels.Common;
 using CRMModels.DataTransfersObjects;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Base;
@@ -34,6 +35,8 @@ namespace CRMWebHost.Controllers
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
         private readonly UserManager<User> _userManager;
+        public string profileImgeDirectory;
+        public string profileImgePath;
         public ContactController(IRepositoryManager repository, ILoggerManager logger,
                                     IServiceManager serviceManager, IMapper mapper,
                                     IHostingEnvironment hostingEnvironment,IConfiguration configuration,
@@ -46,15 +49,16 @@ namespace CRMWebHost.Controllers
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
             _userManager = userManager;
+            profileImgeDirectory = configuration.GetSection("ProfileImageFolderPath").Value;
+            profileImgePath = Path.Combine("", hostingEnvironment.ContentRootPath + profileImgeDirectory);
+
         }
         [HttpPost("addContact")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ContactDto> AddContact([FromForm]CreateContactDto contact)
         {
             var files = HttpContext.Request.Form.Files;
-            var profileImgePath = _configuration.GetSection("ProfileImageFolderPath").Value;
-            var path = Path.Combine("", _hostingEnvironment.ContentRootPath + profileImgePath);
-            path = UploadFiles(path, files);
+            var path = UploadFiles(profileImgePath, files);
             contact.ProfileImageLink = path;
             var response =await _serviceManager.CreateContactAsync(contact);
             return response;
@@ -64,6 +68,21 @@ namespace CRMWebHost.Controllers
         {
             var response =  _serviceManager.GetContacts(contactParameters);
             return Ok(response);
+        }
+        [HttpPost("updateContact")]
+        public async Task<ContactDto> UpdateContact([FromForm]UpdateContactDto contact)
+        {
+            var files = HttpContext.Request.Form.Files;
+            var path = UploadFiles(profileImgePath, files);
+            contact.ProfileImageLink = path;
+            var response = await _serviceManager.UpdateContactAsync(contact);
+            return response;
+        }
+        [HttpDelete("deleteContact")]
+        public async Task<CommonResponse> DeleteContact(long Id)
+        {
+            var response = await _serviceManager.DeleteContact(Id);
+            return response;
         }
         #region Private Methods
         private string UploadFiles(string path,IFormFileCollection files)
@@ -81,6 +100,8 @@ namespace CRMWebHost.Controllers
                     }
                 }
             }
+            else
+                return null;
             return path;
         }
         #endregion
