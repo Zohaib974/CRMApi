@@ -9,5 +9,7 @@ namespace CRMContracts
     {
         public Task<ContactDto> CreateContactAsync(CreateContactDto contact);
         CommmonListResponse<ContactDto> GetContacts(ContactParameters contactParameterss);
+        Task<ContactDto> UpdateContactAsync(UpdateContactDto contact);
+        Task<CommonResponse> DeleteContact(long id);
     }
 }

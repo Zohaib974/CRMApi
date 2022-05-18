@@ -41,6 +41,6 @@ namespace CRMRepository
                 return _contactRepository;
             }
         }
-        public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
+        public Task<int> SaveAsync() => _repositoryContext.SaveChangesAsync();
     }
 }
