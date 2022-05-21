@@ -6,6 +6,7 @@ using CRMModels.DataTransfersObjects;
 using CRMRepository.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -21,7 +22,10 @@ namespace CRMRepository
         }
 
         public void CreateContact(Contact contact) => Create(contact);
-
+        public void CreateContacts(List<Contact> contacts)
+        {
+            CreateEntities(contacts);
+        }
         public PagedList<Contact> GetContacts(ContactParameters contactParameters, bool trackChanges = false)
         {
             var contacts = FindByCondition(e => !e.IsDeleted,trackChanges)
@@ -54,6 +58,15 @@ namespace CRMRepository
                     RepositoryContext.Entry(contact).Property(epropName).IsModified = false;
                 }
             }
+        }
+
+        public async Task<bool> GetContactByNumberAndCreatedBy(string mobileNumber, string officeNumber, string homeNumber, long createdBy)
+        {
+            List<string> numbers = new List<string>{ mobileNumber ?? String.Empty,officeNumber ?? String.Empty, homeNumber ?? String.Empty };
+            return await FindByCondition(e => !e.IsDeleted && 
+                                        (numbers.Contains(e.MobileNumber) || numbers.Contains(e.OfficeNumber) || numbers.Contains(e.HomeNumber)) &&
+                                        e.CreatedBy == createdBy, false)
+                                        .AnyAsync();
         }
         #endregion
     }

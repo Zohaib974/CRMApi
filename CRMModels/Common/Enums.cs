@@ -6,6 +6,7 @@ namespace CRMModels.Common
 {
     public enum ContactStatusEnum
     {
+        NotAssigned = 0,
         Waiting = 1,
         Check = 2
     }
