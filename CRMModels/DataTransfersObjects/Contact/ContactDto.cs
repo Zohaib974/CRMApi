@@ -56,6 +56,7 @@ namespace CRMModels.DataTransfersObjects
         public string RelatedContacts { get; set; }
         public string AssignedTeamMembers { get; set; }
         public string Tags { get; set; }
+        public bool? IsImported { get; set; }
     }
     public class ContactListDto
     {

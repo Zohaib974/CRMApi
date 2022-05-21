@@ -14,6 +14,7 @@ namespace CRMServices.Implementation
 {
     public class ServiceManager : IServiceManager
     {
+        #region declerations
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
@@ -25,14 +26,21 @@ namespace CRMServices.Implementation
             _repositoryManager = repositoryManager;
             LoggedInUserId = 1;
         }
+        #endregion
+        #region Contact
         public async Task<ContactDto> CreateContactAsync(CreateContactDto contact)
         {
             var response = new ContactDto();
             try
             {
+                var res = await _repositoryManager.Contact.GetContactByNumberAndCreatedBy(contact.MobileNumber, contact.OfficeNumber, contact.HomeNumber, LoggedInUserId);
+                if (res)
+                    return new ContactDto() { Successful = false, Message = "Contact already present." };
+
                 var contactEntity = _mapper.Map<Contact>(contact);
                 contactEntity.Status = (int)contact.ContactStatus;
                 contactEntity.CreatedBy = LoggedInUserId;
+                contactEntity.IsImported = false;
                 _repositoryManager.Contact.CreateContact(contactEntity);
                 await _repositoryManager.SaveAsync();
                 response = _mapper.Map<ContactDto>(contactEntity);
@@ -41,8 +49,9 @@ namespace CRMServices.Implementation
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex.ToString());
+                response.Successful = false;
                 response.Message = "Contact creation failed.Error : " + ex.Message;
+                _logger.LogError("Method CreateContactAsync:Error while ceating contact.Error : " + ex.ToString());
             }
             return response;
         }
@@ -78,9 +87,9 @@ namespace CRMServices.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.ToString());
                 response.Successful = false;
                 response.Message = "Contact update failed.Error : " + ex.Message;
+                _logger.LogError("Method UpdateContactAsync:Error while updating contact.Error : " + ex.ToString());
             }
             return response;
         }
@@ -106,8 +115,66 @@ namespace CRMServices.Implementation
             {
                 response.Successful = false;
                 response.Message = "Contact deletion failed.Error : " + ex.Message;
+                _logger.LogError("Method DeleteContact:Error while deleting contact.Error : " + ex.ToString());
             }
             return response;
         }
+        public async Task<CommonResponse> ImportContactsAync(List<CreateContactDto> importedContacts)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                _logger.LogInfo("Contact import started.Total contacts in file:"+importedContacts.Count);
+                List<Contact> importList = new List<Contact>();
+                foreach(var contact in importedContacts)
+                {
+                    var res =await _repositoryManager.Contact.GetContactByNumberAndCreatedBy(contact.MobileNumber, contact.OfficeNumber, contact.HomeNumber, LoggedInUserId);
+                    if (res)
+                        continue;
+
+                    var contactEntity = _mapper.Map<Contact>(contact);
+                    contactEntity.Status = (int)contact.ContactStatus;
+                    contactEntity.CreatedBy = LoggedInUserId;
+                    contactEntity.IsImported = true;
+                    importList.Add(contactEntity);
+                }
+                if(importList.Count == 0)
+                {
+                    response.Successful = true;
+                    response.Message = importedContacts.Count + " Contacs already present.Nothing to import.";
+                }
+                else
+                {
+                    _logger.LogInfo("Total contacts to import: " + importList.Count);
+                    _repositoryManager.Contact.CreateContacts(importList);
+                    await _repositoryManager.SaveAsync();
+                    response.Successful = true;
+                    response.Message = importList.Count + " Contacts imported successfully.";
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Contacts imported failed";
+                _logger.LogError("Method ImportContactsAync:Error while importing contact.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<ContactDto> GetContactByIdAsync(long id)
+        {
+            var response = new ContactDto();
+            var contactEntity = await _repositoryManager.Contact.GetContactByIdAsync(id, false);
+            if (contactEntity == null)
+            {
+                response.Successful = false;
+                response.Message = $"Record with Id: {id} not found.";
+                return response;
+            }
+            _mapper.Map(contactEntity, response);
+            response.Successful = true;
+            response.Message = "Record found successfully.";
+            return response;
+        }
+        #endregion
     }
 }
