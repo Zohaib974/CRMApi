@@ -74,14 +74,13 @@ namespace CRMWebHost.Controllers
             
             List<CreateAttachmentDto> attachments = new List<CreateAttachmentDto>();
             string notUploadedFiles = string.Empty;
-            bool uploadAttachmentsIsImage = false;
             foreach(var file in uploadAttachments.Files)
             {
                 var size = Math.Round((decimal)(file.Length / (1024 * 1024))); //2MB
                 if (size < 2)
                 {
                     filePath = Path.Combine("", _hostingEnvironment.ContentRootPath + attachmentDirectory);
-                    var path = FileUploadHelper.UploadFiles(filePath, file, uploadAttachmentsIsImage ? "Image_" : "File_", _logger, out isUploadedSuccessfully);
+                    var path = FileUploadHelper.UploadFiles(filePath, file, uploadAttachments.IsImage ? "Image_" : "File_", _logger, out isUploadedSuccessfully);
 
                     FileInfo fi = new FileInfo(file.FileName);
                     var attchment = new CreateAttachmentDto()
@@ -93,11 +92,11 @@ namespace CRMWebHost.Controllers
                         FileName = file.FileName,
                         FileLink = path,
                         FileSize = FileUploadHelper.SizeConverter(file.Length),
-                        isImageFile = uploadAttachmentsIsImage
+                        isImageFile = uploadAttachments.IsImage
                     };
                     attachments.Add(attchment);
-                }
                 else
+                }
                 {
                     notUploadedFiles = notUploadedFiles + (string.IsNullOrWhiteSpace(notUploadedFiles)?"" : ",") + file.FileName;
                 }
