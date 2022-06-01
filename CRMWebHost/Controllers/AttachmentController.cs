@@ -95,8 +95,8 @@ namespace CRMWebHost.Controllers
                         isImageFile = uploadAttachments.IsImage
                     };
                     attachments.Add(attchment);
-                else
                 }
+                else
                 {
                     notUploadedFiles = notUploadedFiles + (string.IsNullOrWhiteSpace(notUploadedFiles)?"" : ",") + file.FileName;
                 }
