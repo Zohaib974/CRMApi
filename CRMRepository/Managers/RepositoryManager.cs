@@ -10,6 +10,7 @@ namespace CRMRepository
         private ICompanyRepository _companyRepository;
         private IEmployeeRepository _employeeRepository;
         private IContactRepository _contactRepository;
+        private IAttachmentRepository _attachmentRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
@@ -39,6 +40,15 @@ namespace CRMRepository
                 if (_contactRepository == null)
                     _contactRepository = new ContactRepository(_repositoryContext);
                 return _contactRepository;
+            }
+        }
+        public IAttachmentRepository Attachment
+        {
+            get
+            {
+                if (_attachmentRepository == null)
+                    _attachmentRepository = new AttachmentRepository(_repositoryContext);
+                return _attachmentRepository;
             }
         }
         public Task<int> SaveAsync() => _repositoryContext.SaveChangesAsync();

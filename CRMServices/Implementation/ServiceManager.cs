@@ -7,6 +7,7 @@ using CRMModels.Common;
 using CRMModels.DataTransfersObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -174,6 +175,59 @@ namespace CRMServices.Implementation
             response.Successful = true;
             response.Message = "Record found successfully.";
             return response;
+        }
+        #endregion
+        #region attachments
+        public async Task<CommonResponse> AddAttchments(List<CreateAttachmentDto> attachments)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                if(attachments.Count == 0)
+                    return new CommonResponse(false,"No files to save.");
+
+                _logger.LogInfo("Total attachments to save: " + attachments.Count);
+                var attachmentEntity = _mapper.Map<List<Attachment>>(attachments);
+                _repositoryManager.Attachment.AddAttchments(attachmentEntity);
+                await _repositoryManager.SaveAsync();
+                response.Successful = true;
+                response.Message = attachmentEntity.Count + " Attachments saveed successfully.";
+            }
+            catch(Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Failed to save attachments.Error : " + ex.Message;
+                _logger.LogError("Method AddAttchments:Error while creating attachments.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public CommmonListResponse<AttachmentDto> GetAttachments(AttachmentParameters attachmentParameters)
+        {
+            var repoRespose = _repositoryManager.Attachment.GetAttachments(attachmentParameters, false);
+            var listContacts = _mapper.Map<List<AttachmentDto>>(repoRespose);
+            var response = new CommmonListResponse<AttachmentDto>(listContacts, repoRespose.MetaData.TotalCount,
+                                                repoRespose.MetaData.CurrentPage, repoRespose.MetaData.PageSize);
+            return response;
+        }
+        public async Task<IEnumerable<AttachmentDto>> GetAttachmentsByIds(IEnumerable<long> ids)
+        {
+            var attachmentToReturn = new List<AttachmentDto>();
+            try
+            {
+                var attachmentEntities =  _repositoryManager.Attachment.GetByIds(ids, trackChanges: false);
+                if (attachmentEntities == null || attachmentEntities.Count() == 0)
+                {
+                    return attachmentToReturn;
+                }
+                if (ids.Count() != attachmentEntities.Count())
+                    _logger.LogError("Some ids are not valid in a collection");
+                attachmentToReturn = _mapper.Map<List<AttachmentDto>>(attachmentEntities);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Method GetAttachmentsByIds:Error while getting attachments.Error : " + ex.ToString());
+            }
+            return attachmentToReturn;
         }
         #endregion
     }

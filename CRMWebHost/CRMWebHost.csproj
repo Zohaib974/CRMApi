@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\ContactImports\" />
+    <Folder Include="Files\Attachment\" />
     <Folder Include="Files\ProfileImages\" />
   </ItemGroup>
 </Project>

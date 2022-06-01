@@ -48,6 +48,27 @@ namespace CRMHelper
             }
             
         }
+        public static string SizeConverter(long bytes)
+        {
+            var fileSize = new decimal(bytes);
+            var kilobyte = new decimal(1024);
+            var megabyte = new decimal(1024 * 1024);
+            var gigabyte = new decimal(1024 * 1024 * 1024);
+
+            switch (fileSize)
+            {
+                case var _ when fileSize < kilobyte:
+                    return $"{fileSize}bytes";
+                case var _ when fileSize < megabyte:
+                    return $"{Math.Round(fileSize / kilobyte, 0, MidpointRounding.AwayFromZero):##,###.##}KB";
+                case var _ when fileSize < gigabyte:
+                    return $"{Math.Round(fileSize / megabyte, 2, MidpointRounding.AwayFromZero):##,###.##}MB";
+                case var _ when fileSize >= gigabyte:
+                    return $"{Math.Round(fileSize / gigabyte, 2, MidpointRounding.AwayFromZero):##,###.##}GB";
+                default:
+                    return "n/a";
+            }
+        }
     }
 
 }
