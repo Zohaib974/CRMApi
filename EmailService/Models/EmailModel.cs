@@ -1,4 +1,5 @@
 ﻿using CRMContracts.Email;
+using System.Collections.Generic;
 
 namespace EmailService.Models
 {
@@ -7,6 +8,6 @@ namespace EmailService.Models
         public IRecipient Recipient { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
-        public dynamic Attachments { get; set; }
+        public List<string> Attachments { get; set; }
     }
 }

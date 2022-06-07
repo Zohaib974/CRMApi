@@ -5,6 +5,14 @@ namespace CRMModels.Common
 {
     public class CommonResponse
     {
+        public CommonResponse()
+        {
+        }
+        public CommonResponse(bool isSuccess,string message)
+        {
+            Successful = isSuccess;
+            Message = message;
+        }
         public bool Successful { get; set; }
         public string Message { get; set; }
 

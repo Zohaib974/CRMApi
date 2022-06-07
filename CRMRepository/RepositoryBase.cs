@@ -25,7 +25,7 @@ namespace CRMRepository
                                     .AsNoTracking() : RepositoryContext.Set<T>()
                                     .Where(expression);
         public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
-        public void CreateEntities(List<T> entities) => RepositoryContext.Set<T>().AddRange(entities);
+        public void CreateEntities(List<T> entities) => RepositoryContext.Set<T>().AddRangeAsync(entities);
         public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
         public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
     }

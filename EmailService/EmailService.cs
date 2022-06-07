@@ -6,7 +6,9 @@ using MailKit.Security;
 using MimeKit;
 using SmartFormat;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EmailService
@@ -30,7 +32,7 @@ namespace EmailService
             {
                 var formattedContent = Smart.Format(htmlContent, item.Payload);
 
-                await SendEmailToRecipient(item.Recipient, item.Subject, formattedContent);
+                await SendEmailToRecipient(item.Recipient, item.Subject, formattedContent,emailModel.Attachments);
             }
 
         }
@@ -45,7 +47,7 @@ namespace EmailService
             return htmlContent;
         }
 
-        private async Task<bool> SendEmailToRecipient(IRecipient recipient, string subject, string formattedContent)
+        private async Task<bool> SendEmailToRecipient(IRecipient recipient, string subject, string formattedContent, List<string> attachments)
         {
             try
             {
@@ -53,7 +55,8 @@ namespace EmailService
                 {
                     Recipient = recipient,
                     Content = formattedContent,
-                    Subject = subject
+                    Subject = subject,
+                    Attachments = attachments
                 });
             }
             catch (Exception ex)
@@ -72,18 +75,9 @@ namespace EmailService
             var builder = new BodyBuilder();
             if (model.Attachments != null)
             {
-                byte[] fileBytes;
-                foreach (var file in model.Attachments)
+                foreach (var fileName in model.Attachments)
                 {
-                    if (file.Length > 0)
-                    {
-                        using (var ms = new MemoryStream())
-                        {
-                            file.CopyTo(ms);
-                            fileBytes = ms.ToArray();
-                        }
-                        builder.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
-                    }
+                     builder.Attachments.Add(fileName);
                 }
             }
             builder.HtmlBody = model.Content;

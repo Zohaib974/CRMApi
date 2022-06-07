@@ -31,9 +31,9 @@ namespace CRMWebHost.ModelBinders
                                              StringSplitOptions.RemoveEmptyEntries)
                                             .Select(x => converter.ConvertFromString(x.Trim()))
                                             .ToArray();
-            var guidArray = Array.CreateInstance(genericType, objectArray.Length);
-            objectArray.CopyTo(guidArray, 0);
-            bindingContext.Model = guidArray;
+            var IdArray = Array.CreateInstance(genericType, objectArray.Length);
+            objectArray.CopyTo(IdArray, 0);
+            bindingContext.Model = IdArray;
             bindingContext.Result = ModelBindingResult.Success(bindingContext.Model);
             return Task.CompletedTask;
         }

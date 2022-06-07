@@ -7,6 +7,7 @@ using CRMModels.Common;
 using CRMModels.DataTransfersObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -174,6 +175,81 @@ namespace CRMServices.Implementation
             response.Successful = true;
             response.Message = "Record found successfully.";
             return response;
+        }
+        #endregion
+        #region attachments
+        public async Task<CommonResponse> AddAttchmentsAsync(List<CreateAttachmentDto> attachments)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                if(attachments.Count == 0)
+                    return new CommonResponse(false,"No files to save.");
+
+                _logger.LogInfo("Total attachments to save: " + attachments.Count);
+                var attachmentEntity = _mapper.Map<List<Attachment>>(attachments);
+                _repositoryManager.Attachment.AddAttchmentsAsync(attachmentEntity);
+                await _repositoryManager.SaveAsync();
+                response.Successful = true;
+                response.Message = attachmentEntity.Count + " Attachments saveed successfully.";
+            }
+            catch(Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Failed to save attachments.Error : " + ex.Message;
+                _logger.LogError("Method AddAttchments:Error while creating attachments.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public List<AttachmentGroups> GetAttachments(AttachmentParameters attachmentParameters)
+        {
+            var repoRespose = _repositoryManager.Attachment.GetAttachments(attachmentParameters, false);
+            var listContacts = _mapper.Map<List<AttachmentDto>>(repoRespose);
+            var attachmentGroups = listContacts.GroupBy(a => a.UploadedBy)
+                                    .Select(a=> new AttachmentGroups()
+                                    {
+                                        UploadedBy = a.Key,
+                                        attachments  =a.ToList()
+                                    }).ToList();
+            return attachmentGroups;
+        }
+        public async Task<IEnumerable<AttachmentDto>> GetAttachmentsByIdsAsync(IEnumerable<long> ids)
+        {
+            var attachmentToReturn = new List<AttachmentDto>();
+            try
+            {
+                var attachmentEntities =await  _repositoryManager.Attachment.GetByIdsAsync(ids, trackChanges: false);
+                if (attachmentEntities == null || attachmentEntities.Count() == 0)
+                {
+                    return attachmentToReturn;
+                }
+                if (ids.Count() != attachmentEntities.Count())
+                    _logger.LogError("Some ids are not valid in a collection");
+                attachmentToReturn = _mapper.Map<List<AttachmentDto>>(attachmentEntities);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Method GetAttachmentsByIds:Error while getting attachments.Error : " + ex.ToString());
+            }
+            return attachmentToReturn;
+        }
+        public async Task<AttachmentDto> GetAttachmentsByIdAsync(long id)
+        {
+            var attachmentToReturn = new AttachmentDto();
+            try
+            {
+                var attachmentEntity =await _repositoryManager.Attachment.GetByIdAsync(id, trackChanges: false);
+                if (attachmentEntity == null)
+                {
+                    return null;
+                }
+                attachmentToReturn = _mapper.Map<AttachmentDto>(attachmentEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Method GetAttachmentsById:Error while getting attachment.Error : " + ex.ToString());
+            }
+            return attachmentToReturn;
         }
         #endregion
     }

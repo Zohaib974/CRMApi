@@ -7,6 +7,7 @@ namespace CRMContracts
         ICompanyRepository Company { get; }
         IEmployeeRepository Employee { get; }
         IContactRepository Contact { get; }
+        IAttachmentRepository Attachment { get; }
         Task<int> SaveAsync();
     }
 }

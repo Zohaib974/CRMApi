@@ -69,7 +69,7 @@ namespace CRMWebHost.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ContactDto> AddContact([FromForm] CreateContactDto contact)
         {
-            //var files = HttpContext.Request.Form.Files;
+            var files = HttpContext.Request.Form.Files;
             if (!FileUploadHelper.IsFileExtensionSupported(contact.File))
                 return new ContactDto() { Message = "Unsupported file format.Please upload .jpeg file.", Successful = false };
 

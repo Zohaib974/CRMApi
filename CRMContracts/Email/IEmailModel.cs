@@ -7,5 +7,6 @@ namespace CRMContracts.Email
         IList<IEmailRecipientPayloadInfo> Prepare();
 
         string TemplateName { get; set; }
+        List<string> Attachments { get; set; }
     }
 }

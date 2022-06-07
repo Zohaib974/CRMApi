@@ -26,6 +26,7 @@ namespace CRMEntities
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
     }
 }
