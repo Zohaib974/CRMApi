@@ -2,6 +2,7 @@
 using CRMModels.DataTransfersObjects;
 using CRMEntities.Models;
 using Contact = CRMEntities.Models.Contact;
+using System.Collections.Generic;
 
 namespace CRMWebHost.Configurations
 {
@@ -23,6 +24,11 @@ namespace CRMWebHost.Configurations
             CreateMap<CreateContactDto, Contact>();
             CreateMap<UpdateContactDto, Contact>();
             CreateMap<Contact, ContactDto>();
+            CreateMap<CreateAttachmentDto, Attachment>();
+            CreateMap<AttachmentDto, Attachment>();
+            CreateMap<Attachment, AttachmentDto>();
+            CreateMap<Attachment, CreateAttachmentDto>();
+
         }
     }
 }

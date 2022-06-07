@@ -15,7 +15,7 @@ namespace CRMHelper
                 if (file != null)
                 {
                     FileInfo fi = new FileInfo(file.FileName);
-                    var newFileName = fileNamePrefix + file.FileName.Trim() + DateTime.Now.Ticks + fi.Extension;
+                    var newFileName = fileNamePrefix + Path.GetFileNameWithoutExtension(file.FileName.Trim()) + DateTime.Now.Ticks + fi.Extension;
                     path = path + newFileName;
                     using (var stream = new FileStream(path, FileMode.Create))
                     {

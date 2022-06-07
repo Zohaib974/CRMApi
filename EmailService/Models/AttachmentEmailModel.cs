@@ -1,22 +1,19 @@
 ﻿using CRMContracts.Email;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EmailService.Models
 {
-    public class ResetPasswordEmailModel : IEmailModel
+    public class AttachmentEmailModel : IEmailModel
     {
-        private readonly string _resetPasswordLink;
         private readonly IRecipient _recipient;
 
-        public ResetPasswordEmailModel(string activationUrl, IRecipient recipient)
+        public AttachmentEmailModel(IRecipient recipient)
         {
-            this._resetPasswordLink = activationUrl;
             this._recipient = recipient;
+            Attachments = new List<string>();
         }
 
-        public string TemplateName { get; set; } = "ResetPassword";
+        public string TemplateName { get; set; } = "Attachment";
         public List<string> Attachments { get; set; }
 
         public IList<IEmailRecipientPayloadInfo> Prepare()
@@ -24,8 +21,7 @@ namespace EmailService.Models
             IList<IEmailRecipientPayloadInfo> list = new List<IEmailRecipientPayloadInfo>();
 
             var payload = new Dictionary<string, object>();
-            payload.Add("Name", _recipient.FullName);
-            payload.Add("PasswordLink", _resetPasswordLink);
+            payload.Add("DocumentName", _recipient.FullName);
 
             list.Add(new EmailRecipientPayloadInfo(_recipient, Subject(), payload));
 
@@ -34,7 +30,7 @@ namespace EmailService.Models
 
         private string Subject()
         {
-            return "Reset your account password";
+            return "Accura Core Document";
         }
     }
 }

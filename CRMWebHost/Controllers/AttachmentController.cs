@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CRMContracts;
+using CRMContracts.Email;
 using CRMEntities.Models;
 using CRMHelper;
 using CRMModels;
@@ -8,6 +9,7 @@ using CRMModels.DataTransfersObjects;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Base;
 using CRMWebHost.ModelBinders;
+using EmailService.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +39,7 @@ namespace CRMWebHost.Controllers
         private readonly IServiceManager _serviceManager;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
         private readonly UserManager<User> _userManager;
         public string attachmentDirectory;
         public string filePath;
@@ -44,7 +47,7 @@ namespace CRMWebHost.Controllers
         public AttachmentController(IRepositoryManager repository, ILoggerManager logger,
                                     IServiceManager serviceManager, IMapper mapper,
                                     IHostingEnvironment hostingEnvironment, IConfiguration configuration,
-                                    UserManager<User> userManager)
+                                     IEmailService emailService, UserManager<User> userManager)
         {
             _repository = repository;
             _logger = logger;
@@ -53,6 +56,7 @@ namespace CRMWebHost.Controllers
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
             _userManager = userManager;
+            _emailService = emailService;
             attachmentDirectory = configuration.GetSection("AttachmentFolderPath").Value;
             isUploadedSuccessfully = false;
 
@@ -60,21 +64,21 @@ namespace CRMWebHost.Controllers
         #endregion
 
         [HttpGet("listAttachments")]
-        public CommmonListResponse<AttachmentDto> ListAttachments([FromQuery] AttachmentParameters attachmentParameters)
+        public List<AttachmentGroups> ListAttachments([FromQuery] AttachmentParameters attachmentParameters)
         {
             var response = _serviceManager.GetAttachments(attachmentParameters);
             return response; 
-        }
+        } 
         [HttpPost("uploadAttachments")]
-        public async Task<CommonResponse> UploadAttachments([FromForm] UploadAttachmentsDto uploadAttachments)
+        public async Task<CommonResponse> UploadAttachments([FromForm]UploadAttachmentsDto uploadAttachments)
         {
-            //var Files = HttpContext.Request.Form.Files;
-            if (uploadAttachments.Files == null || uploadAttachments.Files.Count == 0 || uploadAttachments.UploadedBy == 0 || uploadAttachments.ContactId == 0)
+            var File = HttpContext.Request.Form.Files;
+            if (File == null || File.Count == 0 || uploadAttachments.UploadedBy == 0 || uploadAttachments.ContactId == 0)
                 return new CommonResponse() { Successful = false,Message = "Uploaded_By/Contact_Id/Files requried" };
             
             List<CreateAttachmentDto> attachments = new List<CreateAttachmentDto>();
             string notUploadedFiles = string.Empty;
-            foreach(var file in uploadAttachments.Files)
+            foreach(var file in File)
             {
                 var size = Math.Round((decimal)(file.Length / (1024 * 1024))); //2MB
                 if (size < 2)
@@ -101,26 +105,47 @@ namespace CRMWebHost.Controllers
                     notUploadedFiles = notUploadedFiles + (string.IsNullOrWhiteSpace(notUploadedFiles)?"" : ",") + file.FileName;
                 }
             }
-            var response =await _serviceManager.AddAttchments(attachments);
+            var response =await _serviceManager.AddAttchmentsAsync(attachments);
             response.Message = !string.IsNullOrEmpty(notUploadedFiles) ?  response.Message + "Filesize more than 2 mb are not uploaded.Filenames: " + notUploadedFiles : response.Message;
             return response;
         }
-        [HttpGet("downloadAttachments/({ids})", Name = "downloadAttachments")]
-        public async Task<IActionResult> DownloadAttachments()
+        [HttpGet("downloadAttachments")]
+        public async Task<IActionResult> DownloadAttachments(string ids)
         {
-            IEnumerable<long> ids = new List<long>();
+            if (string.IsNullOrEmpty(ids))
+                return Ok(new CommonResponse(false, "No document identifier provided"));
+
+            var objectArray = ids.Split(new[] { "," },
+                                                StringSplitOptions.RemoveEmptyEntries)
+                                               .Select(x => long.Parse(x.Trim()))
+                                               .ToArray();
             if (ids == null)
             {
-                _logger.LogError("Parameter ids is null");
-                return Ok(new CommonResponse(false, "Parameter ids is null"));
+                return Ok(new CommonResponse(false, "Invalid document identifers provided."));
             }
-            var response = await _serviceManager.GetAttachmentsByIds(ids);
+            var response = await _serviceManager.GetAttachmentsByIdsAsync(objectArray);
             if (response.Any())
             {
                 return DownloadAttachments(response.Select(a => a.FileLink).ToList());
             }
             return Ok(new CommonResponse(false, "No files found"));
         }
+        [HttpPost("emailAttachment")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<CommonResponse> EmailAttachment(EmailAttachmentDto emailAttachment)
+        {
+            var response = await _serviceManager.GetAttachmentsByIdAsync(emailAttachment.DocumentId);
+            if (response == null)
+                return new CommonResponse(false, $"Document with identifier {emailAttachment.DocumentId} doesnt not exist.");
+
+            IRecipient recipient = new Recipient(response.FileName , emailAttachment.EmailAddress);
+            IEmailModel emailModel = new AttachmentEmailModel(recipient);
+
+            emailModel.Attachments.Add(response.FileLink);
+            await _emailService.SendEmailAsync(emailModel);
+            return new CommonResponse(true, "Email sent successfully");
+        }
+        #region private methods
         private FileResult DownloadAttachments(List<string> fileNames)
         {
             try
@@ -149,15 +174,16 @@ namespace CRMWebHost.Controllers
                             }
                         });
                     }
-                    return File( memoryStream.ToArray(),"application/zip", zipName);
+                    return File(memoryStream.ToArray(), "application/zip", zipName);
                 }
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
                 throw;
-            }           
+            }
 
         }
+        #endregion
     }
 }

@@ -6,6 +6,7 @@
         {
             OrderBy = "createdOn";
         }
-        public long UploadedBy { get; set; }
+        //public long UploadedBy { get; set; }
+        public long ContactId { get; set; }
     }
 }

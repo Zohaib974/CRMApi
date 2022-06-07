@@ -1,4 +1,8 @@
-﻿namespace CRMModels.DataTransfersObjects
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CRMModels.DataTransfersObjects
 {
     public class AttachmentDto
     {
@@ -8,6 +12,12 @@
         public string FileLink { get; set; }
         public string FileExension { get; set; }
         public string FileSize { get; set; }
-        public string CreatedAt { get; set; }
+        public string CreatedOn { get; set; }
+    }
+    public class AttachmentGroups 
+    {
+        public long UploadedBy { get; set; }
+        public string Name { get; set; } = "Jon Doe";
+        public List<AttachmentDto> attachments { get; set; }
     }
 }

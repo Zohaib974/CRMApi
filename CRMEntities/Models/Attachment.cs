@@ -11,9 +11,8 @@ namespace CRMEntities.Models
         [Required]
         [ForeignKey(nameof(Contact))]
         public long ContactId { get; set; }
-        [MaxLength(100)]
+        [MaxLength(200)]
         public string FileName { get; set; }
-        [MaxLength(100)]
         public string FileLink { get; set; }
         [MaxLength(20)]
         public string FileExension { get; set; }

@@ -9,7 +9,7 @@ namespace CRMModels.DataTransfersObjects
         public long UploadedBy { get; set; }
         public long ContactId { get; set; }
         public bool IsImage { get; set; }
-        public List<IFormFile> Files { get; set; }
+        public List<IFormFile> File { get; set; }
 
     }
 }

@@ -178,7 +178,7 @@ namespace CRMServices.Implementation
         }
         #endregion
         #region attachments
-        public async Task<CommonResponse> AddAttchments(List<CreateAttachmentDto> attachments)
+        public async Task<CommonResponse> AddAttchmentsAsync(List<CreateAttachmentDto> attachments)
         {
             var response = new CommonResponse();
             try
@@ -188,7 +188,7 @@ namespace CRMServices.Implementation
 
                 _logger.LogInfo("Total attachments to save: " + attachments.Count);
                 var attachmentEntity = _mapper.Map<List<Attachment>>(attachments);
-                _repositoryManager.Attachment.AddAttchments(attachmentEntity);
+                _repositoryManager.Attachment.AddAttchmentsAsync(attachmentEntity);
                 await _repositoryManager.SaveAsync();
                 response.Successful = true;
                 response.Message = attachmentEntity.Count + " Attachments saveed successfully.";
@@ -201,20 +201,24 @@ namespace CRMServices.Implementation
             }
             return response;
         }
-        public CommmonListResponse<AttachmentDto> GetAttachments(AttachmentParameters attachmentParameters)
+        public List<AttachmentGroups> GetAttachments(AttachmentParameters attachmentParameters)
         {
             var repoRespose = _repositoryManager.Attachment.GetAttachments(attachmentParameters, false);
             var listContacts = _mapper.Map<List<AttachmentDto>>(repoRespose);
-            var response = new CommmonListResponse<AttachmentDto>(listContacts, repoRespose.MetaData.TotalCount,
-                                                repoRespose.MetaData.CurrentPage, repoRespose.MetaData.PageSize);
-            return response;
+            var attachmentGroups = listContacts.GroupBy(a => a.UploadedBy)
+                                    .Select(a=> new AttachmentGroups()
+                                    {
+                                        UploadedBy = a.Key,
+                                        attachments  =a.ToList()
+                                    }).ToList();
+            return attachmentGroups;
         }
-        public async Task<IEnumerable<AttachmentDto>> GetAttachmentsByIds(IEnumerable<long> ids)
+        public async Task<IEnumerable<AttachmentDto>> GetAttachmentsByIdsAsync(IEnumerable<long> ids)
         {
             var attachmentToReturn = new List<AttachmentDto>();
             try
             {
-                var attachmentEntities =  _repositoryManager.Attachment.GetByIds(ids, trackChanges: false);
+                var attachmentEntities =await  _repositoryManager.Attachment.GetByIdsAsync(ids, trackChanges: false);
                 if (attachmentEntities == null || attachmentEntities.Count() == 0)
                 {
                     return attachmentToReturn;
@@ -226,6 +230,24 @@ namespace CRMServices.Implementation
             catch(Exception ex)
             {
                 _logger.LogError("Method GetAttachmentsByIds:Error while getting attachments.Error : " + ex.ToString());
+            }
+            return attachmentToReturn;
+        }
+        public async Task<AttachmentDto> GetAttachmentsByIdAsync(long id)
+        {
+            var attachmentToReturn = new AttachmentDto();
+            try
+            {
+                var attachmentEntity =await _repositoryManager.Attachment.GetByIdAsync(id, trackChanges: false);
+                if (attachmentEntity == null)
+                {
+                    return null;
+                }
+                attachmentToReturn = _mapper.Map<AttachmentDto>(attachmentEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Method GetAttachmentsById:Error while getting attachment.Error : " + ex.ToString());
             }
             return attachmentToReturn;
         }

@@ -17,9 +17,10 @@ namespace CRMContracts
         Task<ContactDto> GetContactByIdAsync(long id);
         #endregion
         #region Attachment
-        Task<CommonResponse> AddAttchments(List<CreateAttachmentDto> attachments);
-        CommmonListResponse<AttachmentDto> GetAttachments(AttachmentParameters attachmentParameters);
-        Task<IEnumerable<AttachmentDto>> GetAttachmentsByIds(IEnumerable<long> ids);
+        Task<CommonResponse> AddAttchmentsAsync(List<CreateAttachmentDto> attachments);
+        List<AttachmentGroups> GetAttachments(AttachmentParameters attachmentParameters);
+        Task<IEnumerable<AttachmentDto>> GetAttachmentsByIdsAsync(IEnumerable<long> ids);
+        Task<AttachmentDto> GetAttachmentsByIdAsync(long id);
         #endregion
     }
 }

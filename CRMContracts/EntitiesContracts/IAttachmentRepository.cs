@@ -8,8 +8,9 @@ namespace CRMContracts
 {
     public interface IAttachmentRepository
     {
-        void AddAttchments(List<Attachment> attachment);
+        void AddAttchmentsAsync(List<Attachment> attachment);
         PagedList<Attachment> GetAttachments(AttachmentParameters attachmentParameters, bool trackChanges);
-        IEnumerable<Attachment> GetByIds(IEnumerable<long> ids, bool trackChanges);
+        Task<List<Attachment>> GetByIdsAsync(IEnumerable<long> ids, bool trackChanges);
+        Task<Attachment> GetByIdAsync(long id, bool trackChanges);
     }
 }
