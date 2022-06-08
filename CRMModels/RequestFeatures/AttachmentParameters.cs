@@ -8,5 +8,6 @@
         }
         //public long UploadedBy { get; set; }
         public long ContactId { get; set; }
+        public bool IsImage { get; set; }
     }
 }

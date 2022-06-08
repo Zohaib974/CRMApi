@@ -22,5 +22,12 @@ namespace CRMContracts
         Task<IEnumerable<AttachmentDto>> GetAttachmentsByIdsAsync(IEnumerable<long> ids);
         Task<AttachmentDto> GetAttachmentsByIdAsync(long id);
         #endregion
+        #region Job
+        public Task<JobDto> CreateJobAsync(CreateJobDto job);
+        CommmonListResponse<JobDto> GetJobs(JobParameters jobParameterss);
+        Task<JobDto> UpdateJobAsync(UpdateJobDto job);
+        Task<CommonResponse> DeleteJob(long id);
+        Task<JobDto> GetJobByIdAsync(long id);
+        #endregion
     }
 }

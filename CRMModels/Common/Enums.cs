@@ -10,4 +10,10 @@ namespace CRMModels.Common
         Waiting = 1,
         Check = 2
     }
+    public enum JobStatusEnum
+    {
+        NotAssigned = 0,
+        Waiting = 1,
+        Check = 2
+    }
 }

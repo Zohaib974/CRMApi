@@ -252,5 +252,109 @@ namespace CRMServices.Implementation
             return attachmentToReturn;
         }
         #endregion
+
+        #region Job
+        public async Task<JobDto> CreateJobAsync(CreateJobDto job)
+        {
+            var response = new JobDto();
+            try
+            {
+                var jobEntity = _mapper.Map<Job>(job);
+                jobEntity.Status = (int)job.JobStatus;
+                jobEntity.CreatedBy = LoggedInUserId;
+                _repositoryManager.Job.CreateJob(jobEntity);
+                await _repositoryManager.SaveAsync();
+                response = _mapper.Map<JobDto>(jobEntity);
+                response.Successful = true;
+                response.Message = "Job created successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record creation failed.Error : " + ex.Message;
+                _logger.LogError("Method CreateJobAsync:Error while ceating record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public CommmonListResponse<JobDto> GetJobs(JobParameters jobParameters)
+        {
+            var repoRespose = _repositoryManager.Job.GetJobs(jobParameters, false);
+            var listJobs = _mapper.Map<List<JobDto>>(repoRespose);
+            var response = new CommmonListResponse<JobDto>(listJobs, repoRespose.MetaData.TotalCount,
+                                                    repoRespose.MetaData.CurrentPage, repoRespose.MetaData.PageSize);
+            return response;
+        }
+        public async Task<JobDto> UpdateJobAsync(UpdateJobDto jobDto)
+        {
+            var response = new JobDto();
+            try
+            {
+                var jobEntity = await _repositoryManager.Job.GetJobByIdAsync(jobDto.Id, true);
+                if (jobEntity == null)
+                {
+                    response.Successful = false;
+                    response.Message = $"Record with Id: {jobDto.Id} not found.";
+                    return response;
+                }
+                if ((int)jobDto.JobStatus != jobEntity.Status)
+                    jobDto.LastStatusChangeDate = DateTime.UtcNow;
+                _mapper.Map(jobDto, jobEntity);
+                _repositoryManager.Job.MarkModified(jobEntity, jobDto);
+                jobEntity.SetModificationTracking(LoggedInUserId);
+                await _repositoryManager.SaveAsync();
+                _mapper.Map(jobEntity, response);
+                response.Successful = true;
+                response.Message = "Job update successful.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record update failed.Error : " + ex.Message;
+                _logger.LogError("Method UpdateJobAsync:Error while updating record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<CommonResponse> DeleteJob(long id)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                var jobEntity = await _repositoryManager.Job.GetJobByIdAsync(id, true);
+                if (jobEntity == null)
+                {
+                    response.Successful = false;
+                    response.Message = $"Record with Id: {id} not found.";
+                    return response;
+                }
+                jobEntity.SetDeletedTracking(LoggedInUserId);
+                jobEntity.IsDeleted = true;
+                await _repositoryManager.SaveAsync();
+                response.Successful = true;
+                response.Message = "Deleted successfully";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record deletion failed.Error : " + ex.Message;
+                _logger.LogError("Method DeleteJob:Error while deleting record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<JobDto> GetJobByIdAsync(long id)
+        {
+            var response = new JobDto();
+            var jobEntity = await _repositoryManager.Job.GetJobByIdAsync(id, false);
+            if (jobEntity == null)
+            {
+                response.Successful = false;
+                response.Message = $"Record with Id: {id} not found.";
+                return response;
+            }
+            _mapper.Map(jobEntity, response);
+            response.Successful = true;
+            response.Message = "Record found successfully.";
+            return response;
+        }
+        #endregion
     }
 }

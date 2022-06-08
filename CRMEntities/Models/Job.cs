@@ -1,74 +1,51 @@
 ﻿using CRMEntities.Base;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CRMEntities.Models
 {
-    public class Contact : BaseEntity
+    public class Job : BaseEntity
     {
-        [Required(ErrorMessage = "FirstName name is a required field.")]
+        [Required(ErrorMessage = "Name name is a required field.")]
         [MaxLength(60, ErrorMessage = "Maximum length for the Name is 60 characters.")]
-        public string FirstName { get; set; }
-        [MaxLength(60, ErrorMessage = "Maximum length for the LastName is 60 characters.")]
-        public string LastName { get; set; }
-        [MaxLength(60, ErrorMessage = "Maximum length for the Company is 60 characters.")]
-        public string Company { get; set; }
+        public string Name { get; set; }
         [MaxLength(200)]
         public string Address1 { get; set; }
         [MaxLength(200)]
         public string Address2 { get; set; }
-        public string ProfileImageLink { get; set; }
         [MaxLength(50)]
         public string City { get; set; }
         [MaxLength(50)]
         public string State { get; set; }
         public int Zip { get; set; }
-        [MaxLength(50)]
-        public string Email { get; set; }
-        [MaxLength(50)]
-        public string Website { get; set; }
-        [MaxLength(20)]
-        public string FaxNumber { get; set; }
-        [MaxLength(15)]
-        public string MobileNumber { get; set; }
-        [MaxLength(15)]
-        public string HomeNumber { get; set; }
-        [MaxLength(15)]
-        public string OfficeNumber { get; set; }
-        public string Source { get; set; }
         //Additional Details
         public int Status { get; set; }
-        [MaxLength(60, ErrorMessage = "Maximum length for the DisplayName is 60 characters.")]
-        public string DisplayName { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        [MaxLength(200)]
         public string Description { get; set; }
-        [MaxLength(200)]
-        public string Note { get; set; }
+        public string LeadSource { get; set; }
+        public string Tags { get; set; }
         //Tracking Fields
         public DateTime? LastStatusChangeDate { get; set; }
         public DateTime? LastActivityDate { get; set; }
-        public DateTime? LastContacted { get; set; }
-        public int? ContactedCount { get; set; }
-        public bool? IsImported { get; set; }
-        public string Tags { get; set; }
-
         //----------------Relational Fields-------------------------
+        [ForeignKey(nameof(Contact))]
+        public long? PrimaryContactId { get; set; }
         // ---------------To be configured--------------------------
         public long OfficeLocationId { get; set; }
         public long WorkFlowId { get; set; }
         public long SalesRepId { get; set; }
+        public long ProductioManagerId { get; set; }
+        public long TimelineId { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
         //public ICollection<Contact> RelatedContacts { get; set; }
-
         //---------------Navigation properties-----------------------
-        public ICollection<Job> RelatedJobs { get; set; }
-
+        public Contact PrimaryContact { get; set; }
     }
 }
