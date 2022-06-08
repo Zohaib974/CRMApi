@@ -61,17 +61,17 @@ namespace CRMModels.DataTransfersObjects
         public DateTime? LastActivityDate { get; set; }
         public DateTime? LastContacted { get; set; }
         public int? ContactedCount { get; set; }
-
-        //Relational Entities (Not Mapped to DB)
-        public string OfficeLocation { get; set; }
-        public string WorkFlow { get; set; }
-        public string SalesRep { get; set; }
         public string Source { get; set; }
-        public string Subcontractors { get; set; }
-        public string RelatedContacts { get; set; }
-        public string AssignedTeamMembers { get; set; }
         public string Tags { get; set; }
         [Required]
         public IFormFile File { get; set; }
+
+        //Relational Entities (To be configured in DB)
+        public long OfficeLocationId { get; set; }
+        public long WorkFlowId { get; set; }
+        public long SalesRepId { get; set; }
+        public string Subcontractors { get; set; }
+        public string RelatedContacts { get; set; }
+        public string AssignedTeamMembers { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace CRMRepository
         }
         public PagedList<Attachment> GetAttachments(AttachmentParameters attachmentParameters, bool trackChanges)
         {
-            var attachments = FindByCondition(e => !e.IsDeleted && e.ContactId == attachmentParameters.ContactId, trackChanges)
+            var attachments = FindByCondition(e => !e.IsDeleted && (attachmentParameters.ContactId ==0 || e.ContactId == attachmentParameters.ContactId) && e.isImageFile == attachmentParameters.IsImage, trackChanges)
                                     .Search(attachmentParameters.SearchBy, attachmentParameters.SearchTerm)
                                     .Sort(attachmentParameters.OrderBy)
                                     .ToList();

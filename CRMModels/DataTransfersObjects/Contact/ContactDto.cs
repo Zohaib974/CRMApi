@@ -58,12 +58,4 @@ namespace CRMModels.DataTransfersObjects
         public string Tags { get; set; }
         public bool? IsImported { get; set; }
     }
-    public class ContactListDto
-    {
-        public ContactListDto()
-        {
-            list = new List<ContactListDto>();
-        }
-        public List<ContactListDto> list { get; set; }
-    }
 }

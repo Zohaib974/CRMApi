@@ -20,14 +20,21 @@ namespace CRMWebHost.Configurations
             CreateMap<CompanyForCreationDto, Company>();
             CreateMap<EmployeeForCreationDto, Employee>();
             CreateMap<EmployeeForUpdateDto, Employee>(); 
+
             CreateMap<UserForRegistrationDto, User>();
+
             CreateMap<CreateContactDto, Contact>();
             CreateMap<UpdateContactDto, Contact>();
             CreateMap<Contact, ContactDto>();
+
             CreateMap<CreateAttachmentDto, Attachment>();
             CreateMap<AttachmentDto, Attachment>();
             CreateMap<Attachment, AttachmentDto>();
             CreateMap<Attachment, CreateAttachmentDto>();
+
+            CreateMap<CreateJobDto, Job>();
+            CreateMap<UpdateJobDto, Job>();
+            CreateMap<Job, JobDto>();
 
         }
     }
