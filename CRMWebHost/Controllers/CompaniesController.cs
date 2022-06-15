@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CRMContracts;
-using CRMServices.DataTransferObjects;
+using CRMModels.DataTransfersObjects;
 using CRMEntities.Models;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.ModelBinders;
@@ -23,12 +23,15 @@ namespace CRMWebHost.Controllers
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        private readonly IServiceManager _serviceManager;
 
-        public CompaniesController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public CompaniesController(IRepositoryManager repository, ILoggerManager logger,
+                                    IServiceManager serviceManager, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _serviceManager = serviceManager;
         }
         [HttpGet(Name = "GetCompanies"), Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
@@ -62,11 +65,8 @@ namespace CRMWebHost.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
         {
-            var companyEntity = _mapper.Map<Company>(company);
-            _repository.Company.CreateCompany(companyEntity);
-            _repository.SaveAsync();
-            var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
-            return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id },companyToReturn);
+            //var companyToReturn = _serviceManager.CreateCompany(company);
+            return null;// CreatedAtRoute("CompanyById", new { id = companyToReturn.Id },companyToReturn);
         }
         [HttpGet("collection/({ids})", Name = "CompanyCollection")]
         public async Task<IActionResult> GetCompanyCollection([ModelBinder(BinderType =typeof(ArrayModelBinder))]IEnumerable<Guid> ids)

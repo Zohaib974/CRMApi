@@ -25,7 +25,7 @@ namespace CRMRepository.Extensions
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return employees.OrderBy(e => e.Name);
-            var orderQuery = OrderQueryBuilder.CreateOrderQuery<Employee>(orderByQueryString);
+            var orderQuery = QueryBuilder.CreateOrderQuery<Employee>(orderByQueryString);
             if (string.IsNullOrWhiteSpace(orderQuery))
                 return employees.OrderBy(e => e.Name);
             return employees.OrderBy(orderQuery);

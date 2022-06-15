@@ -19,5 +19,4 @@ namespace CRMEntities.Models
         public string Country { get; set; }
         public ICollection<Employee> Employees { get; set; }
     }
-
 }

@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj": {}
+    "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\LoggerService.csproj": {}
   },
   "projects": {
-    "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj": {
+    "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj",
+        "projectUniqueName": "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj",
         "projectName": "CRMContracts",
-        "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\obj\\",
+        "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj",
+        "packagesPath": "C:\\Users\\ZK\\.nuget\\packages\\",
+        "outputPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ZK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -33,11 +33,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj": {
-                "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj"
+              "F:\\Projects\\GitHub\\AccuraCore\\CRMEntities\\CRMEntities.csproj": {
+                "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMEntities\\CRMEntities.csproj"
               },
-              "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj": {
-                "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj"
+              "F:\\Projects\\GitHub\\AccuraCore\\CRMModels\\CRMModels.csproj": {
+                "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMModels\\CRMModels.csproj"
               }
             }
           }
@@ -61,6 +61,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -70,21 +76,21 @@
         }
       }
     },
-    "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj": {
+    "F:\\Projects\\GitHub\\AccuraCore\\CRMEntities\\CRMEntities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj",
+        "projectUniqueName": "F:\\Projects\\GitHub\\AccuraCore\\CRMEntities\\CRMEntities.csproj",
         "projectName": "CRMEntities",
-        "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\CRMEntities.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Other\\CRM\\CRMEntities\\obj\\",
+        "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMEntities\\CRMEntities.csproj",
+        "packagesPath": "C:\\Users\\ZK\\.nuget\\packages\\",
+        "outputPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMEntities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ZK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -146,6 +152,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -155,21 +167,21 @@
         }
       }
     },
-    "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj": {
+    "F:\\Projects\\GitHub\\AccuraCore\\CRMModels\\CRMModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj",
-        "projectName": "CRMServices",
-        "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMServices\\CRMServices.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Other\\CRM\\CRMServices\\obj\\",
+        "projectUniqueName": "F:\\Projects\\GitHub\\AccuraCore\\CRMModels\\CRMModels.csproj",
+        "projectName": "CRMModels",
+        "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMModels\\CRMModels.csproj",
+        "packagesPath": "C:\\Users\\ZK\\.nuget\\packages\\",
+        "outputPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMModels\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ZK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -196,6 +208,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -211,6 +227,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -220,21 +242,21 @@
         }
       }
     },
-    "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj": {
+    "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\LoggerService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
+        "projectUniqueName": "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\LoggerService.csproj",
         "projectName": "LoggerService",
-        "projectPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\LoggerService.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\Other\\CRM\\LoggerService\\obj\\",
+        "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\LoggerService.csproj",
+        "packagesPath": "C:\\Users\\ZK\\.nuget\\packages\\",
+        "outputPath": "F:\\Projects\\GitHub\\AccuraCore\\LoggerService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ZK\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -249,8 +271,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj": {
-                "projectPath": "D:\\MyProjects\\Other\\CRM\\CRMContracts\\CRMContracts.csproj"
+              "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj": {
+                "projectPath": "F:\\Projects\\GitHub\\AccuraCore\\CRMContracts\\CRMContracts.csproj"
               }
             }
           }
@@ -280,6 +302,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
