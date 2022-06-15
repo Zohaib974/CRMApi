@@ -28,6 +28,7 @@ namespace CRMEntities
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<Event> Events { get; set; }
 
     }
 }

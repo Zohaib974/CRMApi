@@ -76,7 +76,7 @@ namespace CRMServices.Implementation
                     response.Message = $"Record with Id: {contactDto.Id} not found.";
                     return response;
                 }
-                if ((int)contactDto.ContactStatus != contactEntity.Status)
+                if (contactDto.ContactStatus != null && (int)contactDto.ContactStatus != contactEntity.Status)
                     contactDto.LastStatusChangeDate = DateTime.UtcNow;
                 _mapper.Map(contactDto, contactEntity);
                 _repositoryManager.Contact.MarkModified(contactEntity, contactDto);
@@ -252,7 +252,6 @@ namespace CRMServices.Implementation
             return attachmentToReturn;
         }
         #endregion
-
         #region Job
         public async Task<JobDto> CreateJobAsync(CreateJobDto job)
         {
@@ -296,7 +295,7 @@ namespace CRMServices.Implementation
                     response.Message = $"Record with Id: {jobDto.Id} not found.";
                     return response;
                 }
-                if ((int)jobDto.JobStatus != jobEntity.Status)
+                if (jobDto.JobStatus != null && (int)jobDto.JobStatus != jobEntity.Status)
                     jobDto.LastStatusChangeDate = DateTime.UtcNow;
                 _mapper.Map(jobDto, jobEntity);
                 _repositoryManager.Job.MarkModified(jobEntity, jobDto);
@@ -344,6 +343,113 @@ namespace CRMServices.Implementation
         {
             var response = new JobDto();
             var jobEntity = await _repositoryManager.Job.GetJobByIdAsync(id, false);
+            if (jobEntity == null)
+            {
+                response.Successful = false;
+                response.Message = $"Record with Id: {id} not found.";
+                return response;
+            }
+            _mapper.Map(jobEntity, response);
+            response.Successful = true;
+            response.Message = "Record found successfully.";
+            return response;
+        }
+        #endregion
+        #region Event
+        public async Task<EventDto> CreateEventAsync(CreateEventDto eventDto)
+        {
+            var response = new EventDto();
+            try
+            {
+                var entity = _mapper.Map<Event>(eventDto);
+                entity.Type = (int)eventDto.EventType;
+                entity.Priority = (int)eventDto.EventPriority;
+                entity.Status = (int)eventDto.EventStatus;
+                entity.CreatedBy = LoggedInUserId;
+                _repositoryManager.Event.CreateEvent(entity);
+                await _repositoryManager.SaveAsync();
+                response = _mapper.Map<EventDto>(entity);
+                response.Successful = true;
+                response.Message = "Record added successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record creation failed.Error : " + ex.Message;
+                _logger.LogError("Method CreateEventAsync:Error while ceating record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public CommmonListResponse<EventDto> GetEvents(EventParameters eventParameters)
+        {
+            var repoRespose = _repositoryManager.Event.GetEvents(eventParameters, false);
+            var list = _mapper.Map<List<EventDto>>(repoRespose);
+            var response = new CommmonListResponse<EventDto>(list, repoRespose.MetaData.TotalCount,
+                                                    repoRespose.MetaData.CurrentPage, repoRespose.MetaData.PageSize);
+            return response;
+        }
+        public async Task<EventDto> UpdateEventAsync(UpdateEventDto eventDto)
+        {
+            var response = new EventDto();
+            try
+            {
+                var entity = await _repositoryManager.Event.GetEventByIdAsync(eventDto.Id, true);
+                if (entity == null)
+                {
+                    response.Successful = false;
+                    response.Message = $"Record with Id: {eventDto.Id} not found.";
+                    return response;
+                }
+                if (eventDto.Status != null && (int)eventDto.Status != entity.Status)
+                    eventDto.LastStatusChangeDate = DateTime.UtcNow;
+
+                _mapper.Map(eventDto, entity);
+                _repositoryManager.Event.MarkModified(entity, eventDto);
+                entity.SetModificationTracking(LoggedInUserId);
+
+                await _repositoryManager.SaveAsync();
+                _mapper.Map(entity, response);
+                response.Successful = true;
+                response.Message = "Record update successful.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record update failed.Error : " + ex.Message;
+                _logger.LogError("Method UpdateEventAsync:Error while updating record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<CommonResponse> DeleteEvent(long id)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                var entity = await _repositoryManager.Event.GetEventByIdAsync(id, true);
+                if (entity == null)
+                {
+                    response.Successful = false;
+                    response.Message = $"Record with Id: {id} not found.";
+                    return response;
+                }
+                entity.SetDeletedTracking(LoggedInUserId);
+                entity.IsDeleted = true;
+                await _repositoryManager.SaveAsync();
+                response.Successful = true;
+                response.Message = "Record deleted successfully";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record deletion failed.Error : " + ex.Message;
+                _logger.LogError("Method DeleteEvent:Error while deleting record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<EventDto> GetEventByIdAsync(long id)
+        {
+            var response = new EventDto();
+            var jobEntity = await _repositoryManager.Event.GetEventByIdAsync(id, false);
             if (jobEntity == null)
             {
                 response.Successful = false;

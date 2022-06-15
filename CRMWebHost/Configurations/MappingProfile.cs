@@ -36,6 +36,10 @@ namespace CRMWebHost.Configurations
             CreateMap<UpdateJobDto, Job>();
             CreateMap<Job, JobDto>();
 
+            CreateMap<CreateEventDto, Event>();
+            CreateMap<UpdateEventDto, Event>();
+            CreateMap<Event, EventDto>();
+
         }
     }
 }

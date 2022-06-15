@@ -7,6 +7,6 @@
             OrderBy = "id";
             SearchBy = "name";
         }
-
+        public long PrimaryContactId { get; set; }
     }
 }

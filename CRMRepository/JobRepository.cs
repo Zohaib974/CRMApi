@@ -28,14 +28,14 @@ namespace CRMRepository
         }
         public PagedList<Job> GetJobs(JobParameters jobParameters, bool trackChanges = false)
         {
-            var jobs = FindByCondition(e => !e.IsDeleted,trackChanges)
+            var jobs = FindByCondition(e => !e.IsDeleted && (e.PrimaryContactId !=null 
+                                    && e.PrimaryContactId.Value == jobParameters.PrimaryContactId),trackChanges)
                                     .Search(jobParameters.SearchBy, jobParameters.SearchTerm)
                                     .Sort(jobParameters.OrderBy)
                                     .ToList();
 
             return PagedList<Job>.ToPagedList(jobs, jobParameters.PageNumber, jobParameters.PageSize);
         }
-
         public async Task<Job> GetJobByIdAsync(long jobId, bool trackChanges)
         {
             return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(jobId), trackChanges).SingleOrDefaultAsync();
