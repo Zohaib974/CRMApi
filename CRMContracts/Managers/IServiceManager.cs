@@ -29,5 +29,12 @@ namespace CRMContracts
         Task<CommonResponse> DeleteJob(long id);
         Task<JobDto> GetJobByIdAsync(long id);
         #endregion
+        #region Event
+        public Task<EventDto> CreateEventAsync(CreateEventDto eventDto);
+        CommmonListResponse<EventDto> GetEvents(EventParameters jobParameterss);
+        Task<EventDto> UpdateEventAsync(UpdateEventDto eventDto);
+        Task<CommonResponse> DeleteEvent(long id);
+        Task<EventDto> GetEventByIdAsync(long id);
+        #endregion
     }
 }

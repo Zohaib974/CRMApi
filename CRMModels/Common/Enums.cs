@@ -16,4 +16,22 @@ namespace CRMModels.Common
         Waiting = 1,
         Check = 2
     }
+    public enum EventStatusEnum
+    {
+        NotAssigned = 0,
+        Incomplete = 1,
+        Complete = 2
+    }
+    public enum EventPriorityEnum
+    {
+        NotAssigned = 0,
+        High = 1,
+        Meduim = 2,
+        Low = 3
+    }
+    public enum EventTypeEnum
+    {
+        NotAssigned = 0,
+        Task = 1
+    }
 }
