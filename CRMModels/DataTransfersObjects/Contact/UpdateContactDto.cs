@@ -32,8 +32,8 @@ namespace CRMModels.DataTransfersObjects
         public string HomeNumber { get; set; }
         public string OfficeNumber { get; set; }
         //Additional Details
-        [EnumDataType(typeof(ContactStatusEnum))]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[EnumDataType(typeof(ContactStatusEnum))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public ContactStatusEnum? ContactStatus { get; set; }
         public int? Status
         {
