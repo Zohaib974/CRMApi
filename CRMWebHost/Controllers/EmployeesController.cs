@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CRMContracts;
-using CRMServices.DataTransferObjects;
+using CRMModels.DataTransfersObjects;
 using CRMEntities.Models;
-using CRMServices.RequestFeatures;
+using CRMModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -46,8 +46,8 @@ namespace CRMWebHost.Controllers
             var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
 
             Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(employeesFromDb.MetaData));
-            //return Ok(employeesDto);
-            return Ok(_dataShaper.ShapeData(employeesDto, employeeParameters.Fields));
+            return Ok(employeesDto);
+            //return Ok(_dataShaper.ShapeData(employeesDto, employeeParameters.Fields));
         }
         [HttpGet("{id}", Name = "GetEmployeeForCompany")]
         public async Task<IActionResult> GetEmployeeForCompanyAsync(Guid companyId, Guid id)

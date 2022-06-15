@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using CRMServices.DataTransferObjects;
+using CRMModels.DataTransfersObjects;
 using CRMEntities.Models;
-using System;
+using Contact = CRMEntities.Models.Contact;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CRMWebHost.Configurations
 {
@@ -22,7 +20,26 @@ namespace CRMWebHost.Configurations
             CreateMap<CompanyForCreationDto, Company>();
             CreateMap<EmployeeForCreationDto, Employee>();
             CreateMap<EmployeeForUpdateDto, Employee>(); 
+
             CreateMap<UserForRegistrationDto, User>();
+
+            CreateMap<CreateContactDto, Contact>();
+            CreateMap<UpdateContactDto, Contact>();
+            CreateMap<Contact, ContactDto>();
+
+            CreateMap<CreateAttachmentDto, Attachment>();
+            CreateMap<AttachmentDto, Attachment>();
+            CreateMap<Attachment, AttachmentDto>();
+            CreateMap<Attachment, CreateAttachmentDto>();
+
+            CreateMap<CreateJobDto, Job>();
+            CreateMap<UpdateJobDto, Job>();
+            CreateMap<Job, JobDto>();
+
+            CreateMap<CreateEventDto, Event>();
+            CreateMap<UpdateEventDto, Event>();
+            CreateMap<Event, EventDto>();
+
         }
     }
 }

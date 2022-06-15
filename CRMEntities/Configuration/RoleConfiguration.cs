@@ -1,41 +1,48 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CRMEntities.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CRMEntities.Configuration
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
+    public class RoleConfiguration : IEntityTypeConfiguration<UserRole>
     {
-        public void Configure(EntityTypeBuilder<IdentityRole> builder)
+        public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             builder.HasData(
-            new IdentityRole
+            new UserRole
             {
+                Id = 1,
                 Name = "SuperAdmin",
                 NormalizedName = "SUPERADMIN"
             },
-            new IdentityRole
+            new UserRole
             {
+                Id = 2,
                 Name = "Administrator",
                 NormalizedName = "ADMINISTRATOR"
             },
-            new IdentityRole
+            new UserRole
             {
+                Id = 3,
                 Name = "Manager",
                 NormalizedName = "MANAGER"
             },
-            new IdentityRole
+            new UserRole
             {
+                Id = 4,
                 Name = "Employee",
                 NormalizedName = "EMPLOYEE"
             },
-            new IdentityRole
+            new UserRole
             {
+                Id = 5,
                 Name = "User",
                 NormalizedName = "USER"
             },
-            new IdentityRole
+            new UserRole
             {
+                Id = 6,
                 Name = "Guest",
                 NormalizedName = "GUEST"
             }

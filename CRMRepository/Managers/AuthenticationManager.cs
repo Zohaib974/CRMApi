@@ -1,6 +1,7 @@
 ﻿using CRMContracts;
 using CRMEntities.Models;
-using CRMServices.DataTransferObjects;
+using CRMModels;
+using CRMModels.DataTransfersObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -27,8 +28,7 @@ namespace CRMRepository
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
             _user = await _userManager.FindByNameAsync(userForAuth.UserName);
-            return (_user != null && await _userManager.CheckPasswordAsync(_user,
-           userForAuth.Password));
+            return (_user != null && await _userManager.CheckPasswordAsync(_user,userForAuth.Password));
         }
         public async Task<string> CreateToken()
         {

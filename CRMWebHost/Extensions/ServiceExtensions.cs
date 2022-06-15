@@ -2,17 +2,23 @@
 using CRMEntities;
 using CRMEntities.Models;
 using CRMRepository;
+using CRMServices.Implementation;
 using CRMWebHost.Configurations;
 using LoggerService;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
@@ -58,6 +64,9 @@ namespace CRMWebHost.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
                            services.AddScoped<IRepositoryManager, RepositoryManager>();
 
+        //Configure service manager
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+                           services.AddScoped<IServiceManager, ServiceManager>();
         //Configure custom output formatter
         public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
                             builder.AddMvcOptions(config => config.OutputFormatters.Add(new
@@ -92,7 +101,7 @@ namespace CRMWebHost.Extensions
         //Configure Asp Identity
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<User>(o =>
+            var builder = services.AddIdentity<User,UserRole>(o =>
             {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
@@ -101,8 +110,10 @@ namespace CRMWebHost.Extensions
                 o.Password.RequiredLength = 10;
                 o.User.RequireUniqueEmail = true;
             });
-            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
-            IdentityBuilder identityBuilder = builder.AddEntityFrameworkStores<RepositoryContext>().AddDefaultTokenProviders();
+            builder = new IdentityBuilder(builder.UserType, typeof(UserRole), builder.Services);
+            IdentityBuilder identityBuilder = builder.AddEntityFrameworkStores<RepositoryContext>()
+                                                    .AddSignInManager<ApplicationSignInManager>()
+                                                    .AddDefaultTokenProviders();
         }
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
@@ -110,8 +121,10 @@ namespace CRMWebHost.Extensions
             var jwtSettings = configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>
             {
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             })
             .AddJwtBearer(options =>
             {
@@ -165,6 +178,18 @@ namespace CRMWebHost.Extensions
                     }
                 });
             });
+        }
+
+        public static void ConfigureDataProtectionToken(this IServiceCollection services, IConfiguration configuration)
+        {
+            var expiredInHours = int.Parse(configuration.GetSection("ResetPasswordLinkExpiryDurationHours").Value);
+            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(expiredInHours));
+        }
+    }
+    public class ApplicationSignInManager : SignInManager<User>
+    {
+        public ApplicationSignInManager(UserManager<User> userManager, IHttpContextAccessor contextAccessor, IUserClaimsPrincipalFactory<User> claimsFactory, IOptions<IdentityOptions> optionsAccessor, ILogger<SignInManager<User>> logger, IAuthenticationSchemeProvider schemes, IUserConfirmation<User> confirmation) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
+        {
         }
     }
 }
