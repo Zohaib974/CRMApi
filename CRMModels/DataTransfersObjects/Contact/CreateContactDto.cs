@@ -42,9 +42,9 @@ namespace CRMModels.DataTransfersObjects
         [MaxLength(15)]
         public string OfficeNumber { get; set; }
         //Additional Details
-        [Required]
-        [EnumDataType(typeof(ContactStatusEnum))]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[Required]
+        //[EnumDataType(typeof(ContactStatusEnum))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public ContactStatusEnum ContactStatus { get; set; }
         [MaxLength(60, ErrorMessage = "Maximum length for the DisplayName is 60 characters.")]
         public string DisplayName { get; set; }
@@ -63,7 +63,7 @@ namespace CRMModels.DataTransfersObjects
         public int? ContactedCount { get; set; }
         public string Source { get; set; }
         public string Tags { get; set; }
-        [Required]
+        //[Required]
         public IFormFile File { get; set; }
 
         //Relational Entities (To be configured in DB)
