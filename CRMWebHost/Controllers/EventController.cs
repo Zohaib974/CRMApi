@@ -39,7 +39,7 @@ namespace CRMWebHost.Controllers
         }
         [HttpPost("updateEvent")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<EventDto> UpdateJob(UpdateEventDto model)
+        public async Task<EventDto> UpdateEvent(UpdateEventDto model)
         {
             var response = await _serviceManager.UpdateEventAsync(model);
             return response;
@@ -51,7 +51,7 @@ namespace CRMWebHost.Controllers
             return response;
         }
         [HttpGet("getEvent")]
-        public async Task<EventDto> GetJob([FromQuery] long Id)
+        public async Task<EventDto> GetEvent([FromQuery] long Id)
         {
             if (Id == 0)
                 return new EventDto() { Successful = false, Message = "Invalid Event id." };
