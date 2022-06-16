@@ -10,6 +10,7 @@ namespace CRMContracts
         IAttachmentRepository Attachment { get; }
         IJobRepository Job { get; }
         IEventRepository Event { get; }
+        IWorkOrderRepository WorkOrder { get; }
         Task<int> SaveAsync();
     }
 }
