@@ -462,5 +462,111 @@ namespace CRMServices.Implementation
             return response;
         }
         #endregion
+        #region WorkOrder
+        public async Task<WorkOrderDto> CreateWorkOrderAsync(CreateWorkOrderDto addDto)
+        {
+            var response = new WorkOrderDto();
+            try
+            {
+                var entity = _mapper.Map<WorkOrder>(addDto);
+                entity.Priority = (int)addDto.WorkOrderPriority;
+                entity.Status = (int)addDto.WorkOrderStatus;
+                entity.CreatedBy = LoggedInUserId;
+                _repositoryManager.WorkOrder.CreateWorkOrder(entity);
+                await _repositoryManager.SaveAsync();
+                response = _mapper.Map<WorkOrderDto>(entity);
+                response.Successful = true;
+                response.Message = "Record added successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record creation failed.Error : " + ex.Message;
+                _logger.LogError("Method CreateWorkOrderAsync:Error while ceating record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public CommmonListResponse<WorkOrderDto> GetWorkOrders(WorkOrderParameters listParameters)
+        {
+            var repoRespose = _repositoryManager.WorkOrder.GetWorkOrders(listParameters, false);
+            var list = _mapper.Map<List<WorkOrderDto>>(repoRespose);
+            var response = new CommmonListResponse<WorkOrderDto>(list, repoRespose.MetaData.TotalCount,
+                                                    repoRespose.MetaData.CurrentPage, repoRespose.MetaData.PageSize);
+            return response;
+        }
+        public async Task<WorkOrderDto> UpdateWorkOrderAsync(UpdateWorkOrderDto updateDto)
+        {
+            var response = new WorkOrderDto();
+            try
+            {
+                var entity = await _repositoryManager.WorkOrder.GetWorkOrderByIdAsync(updateDto.Id, true);
+                if (entity == null)
+                {
+                    response.Successful = false;
+                    response.Message = $"Record with Id: {updateDto.Id} not found.";
+                    return response;
+                }
+                if (updateDto.Status != null && (int)updateDto.Status != entity.Status)
+                    updateDto.LastStatusChangeDate = DateTime.UtcNow;
+
+                _mapper.Map(updateDto, entity);
+                _repositoryManager.WorkOrder.MarkModified(entity, updateDto);
+                entity.SetModificationTracking(LoggedInUserId);
+
+                await _repositoryManager.SaveAsync();
+                _mapper.Map(entity, response);
+                response.Successful = true;
+                response.Message = "Record update successful.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record update failed.Error : " + ex.Message;
+                _logger.LogError("Method UpdateWorkOrderAsync:Error while updating record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<CommonResponse> DeleteWorkOrder(long id)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                var entity = await _repositoryManager.WorkOrder.GetWorkOrderByIdAsync(id, true);
+                if (entity == null)
+                {
+                    response.Successful = false;
+                    response.Message = $"Record with Id: {id} not found.";
+                    return response;
+                }
+                entity.SetDeletedTracking(LoggedInUserId);
+                entity.IsDeleted = true;
+                await _repositoryManager.SaveAsync();
+                response.Successful = true;
+                response.Message = "Record deleted successfully";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Record deletion failed.Error : " + ex.Message;
+                _logger.LogError("Method DeleteWorkOrder:Error while deleting record.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<WorkOrderDto> GetWorkOrderByIdAsync(long id)
+        {
+            var response = new WorkOrderDto();
+            var jobEntity = await _repositoryManager.WorkOrder.GetWorkOrderByIdAsync(id, false);
+            if (jobEntity == null)
+            {
+                response.Successful = false;
+                response.Message = $"Record with Id: {id} not found.";
+                return response;
+            }
+            _mapper.Map(jobEntity, response);
+            response.Successful = true;
+            response.Message = "Record found successfully.";
+            return response;
+        }
+        #endregion
     }
 }

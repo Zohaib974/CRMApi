@@ -36,5 +36,13 @@ namespace CRMContracts
         Task<CommonResponse> DeleteEvent(long id);
         Task<EventDto> GetEventByIdAsync(long id);
         #endregion
+        #region WorkOrder
+        public Task<WorkOrderDto> CreateWorkOrderAsync(CreateWorkOrderDto workOrderDto);
+        CommmonListResponse<WorkOrderDto> GetWorkOrders(WorkOrderParameters workOrderParameterss);
+        Task<WorkOrderDto> UpdateWorkOrderAsync(UpdateWorkOrderDto workOrderDto);
+        Task<CommonResponse> DeleteWorkOrder(long id);
+        Task<WorkOrderDto> GetWorkOrderByIdAsync(long id);
+        #endregion
+
     }
 }
