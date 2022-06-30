@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace CRMWebHost.Controllers
 {
     //[Authorize]
-    [ApiVersion("1.0")]
-    [ApiExplorerSettings(GroupName = "v1")]
+    [ApiVersion("2.0")]
+    [ApiExplorerSettings(GroupName = "v2")]
     [Route("api/workOrders")]
     [ApiController]
     public class WorkOrderController : BaseController
