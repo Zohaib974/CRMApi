@@ -271,9 +271,20 @@ namespace CRMServices.Implementation
             var response = new JobDto();
             try
             {
+                var contacts = _repositoryManager.Contact.GetContactsIdsAsync(job.RelatedContactIds, false);
                 var jobEntity = _mapper.Map<Job>(job);
                 jobEntity.Status = (int)job.JobStatus;
                 jobEntity.CreatedBy = LoggedInUserId;
+                var jobCtcList = new List<JobContact>();
+                foreach (var ctc in contacts)
+                {
+                    jobCtcList.Add(new JobContact()
+                    {
+                        ContactId = ctc.Id,
+                        JobId = jobEntity.Id
+                    });
+                }
+                jobEntity.JobContacts = jobCtcList;
                 _repositoryManager.Job.CreateJob(jobEntity);
                 await _repositoryManager.SaveAsync();
                 response = _mapper.Map<JobDto>(jobEntity);
@@ -374,11 +385,22 @@ namespace CRMServices.Implementation
             var response = new EventDto();
             try
             {
+                var contacts = _repositoryManager.Contact.GetContactsIdsAsync(eventDto.RelatedContactIds, false);
                 var entity = _mapper.Map<Event>(eventDto);
                 entity.Type = (int)eventDto.EventType;
                 entity.Priority = (int)eventDto.EventPriority;
                 entity.Status = (int)eventDto.EventStatus;
                 entity.CreatedBy = LoggedInUserId;
+                var eventCtcList = new List<EventContact>();
+                foreach (var ctc in contacts)
+                {
+                    eventCtcList.Add(new EventContact()
+                    {
+                        ContactId = ctc.Id,
+                        EventId = entity.Id
+                    });
+                }
+                entity.EventContacts = eventCtcList;
                 _repositoryManager.Event.CreateEvent(entity);
                 await _repositoryManager.SaveAsync();
                 response = _mapper.Map<EventDto>(entity);

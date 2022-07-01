@@ -38,7 +38,7 @@ namespace CRMRepository
         }
         public async Task<Job> GetJobByIdAsync(long jobId, bool trackChanges)
         {
-            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(jobId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(jobId), trackChanges).Include(a=>a.JobContacts).SingleOrDefaultAsync();
         }
         #region helperMethod
         public void MarkModified(Job job,UpdateJobDto jobDto)

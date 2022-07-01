@@ -69,7 +69,10 @@ namespace CRMEntities.Models
         //public ICollection<Contact> RelatedContacts { get; set; }
 
         //---------------Navigation properties-----------------------
-        public ICollection<Job> RelatedJobs { get; set; }
+        public ICollection<Job> Jobs { get; set; }
+        public ICollection<Event> Events { get; set; }
+        public ICollection<JobContact> JobContacts { get; set; }
+        public ICollection<EventContact> EventContacts { get; set; }
 
     }
 }

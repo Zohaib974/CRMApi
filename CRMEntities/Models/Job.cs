@@ -9,6 +9,10 @@ namespace CRMEntities.Models
 {
     public class Job : BaseEntity
     {
+        public Job()
+        {
+            JobContacts = new List<JobContact>();
+        }
         [Required(ErrorMessage = "Name name is a required field.")]
         [MaxLength(60, ErrorMessage = "Maximum length for the Name is 60 characters.")]
         public string Name { get; set; }
@@ -45,8 +49,15 @@ namespace CRMEntities.Models
         public long TimelineId { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
         //---------------Navigation properties-----------------------
         public Contact PrimaryContact { get; set; }
+        public ICollection<JobContact> JobContacts { get; set; }
+    }
+    public class JobContact
+    {
+        public long ContactId { get; set; }
+        public Contact Contact { get; set; }
+        public long JobId { get; set; }
+        public Job Job { get; set; }
     }
 }

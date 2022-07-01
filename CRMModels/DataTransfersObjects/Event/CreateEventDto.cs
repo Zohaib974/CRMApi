@@ -36,7 +36,7 @@ namespace CRMModels.DataTransfersObjects
         // ---------------To be configured--------------------------
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
         //public ICollection<Job> RelatedJobs { get; set; }
     }
 }

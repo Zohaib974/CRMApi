@@ -72,6 +72,11 @@ namespace CRMRepository
                                         e.CreatedBy == createdBy, false)
                                         .AnyAsync();
         }
+
+        public List<Contact> GetContactsIdsAsync(List<long> Ids, bool trackChanges)
+        {
+            return FindByCondition(e => !e.IsDeleted && Ids.Contains(e.Id), trackChanges).ToList();
+        }
         #endregion
     }
 }
