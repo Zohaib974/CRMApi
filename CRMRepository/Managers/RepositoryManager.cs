@@ -14,6 +14,7 @@ namespace CRMRepository
         private IJobRepository _jobRepository;
         private IEventRepository _eventRepository;
         private IWorkOrderRepository _workOrderRepository;
+        private IActivityRepository _activityRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
@@ -79,6 +80,15 @@ namespace CRMRepository
                 if (_workOrderRepository == null)
                     _workOrderRepository = new WorkOrderRepository(_repositoryContext);
                 return _workOrderRepository;
+            }
+        }
+        public IActivityRepository Activity
+        {
+            get
+            {
+                if (_activityRepository == null)
+                    _activityRepository = new ActivityRepository(_repositoryContext);
+                return _activityRepository;
             }
         }
         public Task<int> SaveAsync() => _repositoryContext.SaveChangesAsync();

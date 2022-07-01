@@ -34,4 +34,9 @@ namespace CRMModels.Common
         NotAssigned = 0,
         Task = 1
     }
+    public enum ActivityTypeEnum
+    {
+        NotAssigned = 0,
+        Task = 1
+    }
 }
