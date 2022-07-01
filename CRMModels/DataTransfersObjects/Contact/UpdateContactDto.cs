@@ -53,6 +53,7 @@ namespace CRMModels.DataTransfersObjects
         public string Note { get; set; }
 
         //Relational Entities (Not Mapped to DB)
+        public long? CompanyId { get; set; }
         //public string OfficeLocation { get; set; }
         //public string WorkFlow { get; set; }
         //public string SalesRep { get; set; }

@@ -40,6 +40,10 @@ namespace CRMRepository
         {
             return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(contactId), trackChanges).SingleOrDefaultAsync();
         }
+        public async Task<List<Contact>> GetContactsByCompanyIdAsync(long companyId, bool trackChanges)
+        {
+            return await FindByCondition(e => !e.IsDeleted && e.CompanyId.Equals(companyId), trackChanges).ToListAsync();
+        }
         #region helperMethod
         public void MarkModified(Contact contact,UpdateContactDto contactDto)
         {

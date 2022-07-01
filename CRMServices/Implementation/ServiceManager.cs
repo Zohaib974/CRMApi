@@ -20,12 +20,14 @@ namespace CRMServices.Implementation
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
         public long LoggedInUserId;
+        public long LoggedInUserCompanyId;
         public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, ILoggerManager logger)
         {
             _logger = logger;
             _mapper = mapper;
             _repositoryManager = repositoryManager;
             LoggedInUserId = 1;
+            LoggedInUserCompanyId = 1;
         }
         #endregion
         #region Contact
@@ -174,6 +176,17 @@ namespace CRMServices.Implementation
             _mapper.Map(contactEntity, response);
             response.Successful = true;
             response.Message = "Record found successfully.";
+            return response;
+        }
+        public async Task<List<ContactDto>> GetRelatedContacts(long companyId)
+        {
+            var response = new List<ContactDto>();
+            if (companyId == 0)
+                return response;
+            var contactEntities = await _repositoryManager.Contact.GetContactsByCompanyIdAsync(companyId, false);
+            if (contactEntities == null)
+                return response;
+            _mapper.Map(contactEntities, response);
             return response;
         }
         #endregion

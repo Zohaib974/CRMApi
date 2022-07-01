@@ -59,6 +59,7 @@ namespace CRMEntities.Models
         public string Tags { get; set; }
 
         //----------------Relational Fields-------------------------
+        public long? CompanyId { get; set; }
         // ---------------To be configured--------------------------
         public long OfficeLocationId { get; set; }
         public long WorkFlowId { get; set; }

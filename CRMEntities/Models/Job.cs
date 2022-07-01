@@ -36,6 +36,7 @@ namespace CRMEntities.Models
         //----------------Relational Fields-------------------------
         [ForeignKey(nameof(Contact))]
         public long? PrimaryContactId { get; set; }
+        public long? CompanyId { get; set; }
         // ---------------To be configured--------------------------
         public long OfficeLocationId { get; set; }
         public long WorkFlowId { get; set; }
