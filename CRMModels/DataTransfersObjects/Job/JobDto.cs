@@ -1,6 +1,7 @@
 ﻿using CRMModels.Common;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -8,6 +9,10 @@ namespace CRMModels.DataTransfersObjects
 {
     public class JobDto : CommonResponse
     {
+        public JobDto()
+        {
+            RelatedContacts = new List<ContactDto>();
+        }
         public long Id { get; set; }
         public string Name { get; set; }
         public string Address1 { get; set; }
@@ -38,6 +43,6 @@ namespace CRMModels.DataTransfersObjects
         public string Timeline { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
+        public ICollection<ContactDto> RelatedContacts { get; set; }
     }
 }

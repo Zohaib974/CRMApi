@@ -72,7 +72,7 @@ namespace CRMModels.DataTransfersObjects
         public long WorkFlowId { get; set; }
         public long SalesRepId { get; set; }
         public string Subcontractors { get; set; }
-        public string RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
         public string AssignedTeamMembers { get; set; }
     }
 }

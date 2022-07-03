@@ -40,10 +40,23 @@ namespace CRMServices.Implementation
                 if (res)
                     return new ContactDto() { Successful = false, Message = "Contact already present." };
 
+                var contacts = _repositoryManager.Contact.GetContactsIdsAsync(contact.RelatedContactIds, false);
                 var contactEntity = _mapper.Map<Contact>(contact);
                 contactEntity.Status = (int)contact.ContactStatus;
                 contactEntity.CreatedBy = LoggedInUserId;
                 contactEntity.IsImported = false;
+
+
+                var relCtcList = new List<RelatedContact>();
+                foreach (var ctc in contacts)
+                {
+                    relCtcList.Add(new RelatedContact()
+                    {
+                        RelContactId = ctc.Id
+                    });
+                }
+                //contactEntity.RelatedContacts = relCtcList;
+
                 _repositoryManager.Contact.CreateContact(contactEntity);
                 await _repositoryManager.SaveAsync();
                 response = _mapper.Map<ContactDto>(contactEntity);
@@ -319,11 +332,25 @@ namespace CRMServices.Implementation
                     response.Message = $"Record with Id: {jobDto.Id} not found.";
                     return response;
                 }
+                var contacts = _repositoryManager.Contact.GetContactsIdsAsync(jobDto.RelatedContactIds, false);
                 if (jobDto.JobStatus != null && (int)jobDto.JobStatus != jobEntity.Status)
                     jobDto.LastStatusChangeDate = DateTime.UtcNow;
                 _mapper.Map(jobDto, jobEntity);
                 _repositoryManager.Job.MarkModified(jobEntity, jobDto);
                 jobEntity.SetModificationTracking(LoggedInUserId);
+
+
+                var jobCtcList = new List<JobContact>();
+                foreach (var ctc in contacts)
+                {
+                    jobCtcList.Add(new JobContact()
+                    {
+                        ContactId = ctc.Id,
+                        JobId = jobEntity.Id
+                    });
+                }
+                jobEntity.JobContacts = jobCtcList;
+
                 await _repositoryManager.SaveAsync();
                 _mapper.Map(jobEntity, response);
                 response.Successful = true;
@@ -374,6 +401,15 @@ namespace CRMServices.Implementation
                 return response;
             }
             _mapper.Map(jobEntity, response);
+            if (jobEntity.JobContacts.Any())
+            {
+                foreach(var jcontact in jobEntity.JobContacts)
+                {
+                    var contactDt = new ContactDto();
+                    _mapper.Map(jcontact.Contact, contactDt);
+                    response.RelatedContacts.Add(contactDt);
+                }
+            }
             response.Successful = true;
             response.Message = "Record found successfully.";
             return response;
@@ -435,12 +471,25 @@ namespace CRMServices.Implementation
                     response.Message = $"Record with Id: {eventDto.Id} not found.";
                     return response;
                 }
+                var contacts = _repositoryManager.Contact.GetContactsIdsAsync(eventDto.RelatedContactIds, false);
                 if (eventDto.Status != null && (int)eventDto.Status != entity.Status)
                     eventDto.LastStatusChangeDate = DateTime.UtcNow;
 
                 _mapper.Map(eventDto, entity);
                 _repositoryManager.Event.MarkModified(entity, eventDto);
                 entity.SetModificationTracking(LoggedInUserId);
+
+
+                var eventCtcList = new List<EventContact>();
+                foreach (var ctc in contacts)
+                {
+                    eventCtcList.Add(new EventContact()
+                    {
+                        ContactId = ctc.Id,
+                        EventId = entity.Id
+                    });
+                }
+                entity.EventContacts = eventCtcList;
 
                 await _repositoryManager.SaveAsync();
                 _mapper.Map(entity, response);
@@ -492,6 +541,15 @@ namespace CRMServices.Implementation
                 return response;
             }
             _mapper.Map(jobEntity, response);
+            if (jobEntity.EventContacts.Any())
+            {
+                foreach (var econtact in jobEntity.EventContacts)
+                {
+                    var contactDt = new ContactDto();
+                    _mapper.Map(econtact.Contact, contactDt);
+                    response.RelatedContacts.Add(contactDt);
+                }
+            }
             response.Successful = true;
             response.Message = "Record found successfully.";
             return response;

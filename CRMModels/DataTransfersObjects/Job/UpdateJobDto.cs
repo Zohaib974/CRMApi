@@ -1,6 +1,7 @@
 ﻿using CRMModels.Common;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -46,6 +47,6 @@ namespace CRMModels.DataTransfersObjects
         public long TimelineId { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
     }
 }

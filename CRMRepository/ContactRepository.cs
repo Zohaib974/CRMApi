@@ -75,7 +75,7 @@ namespace CRMRepository
 
         public List<Contact> GetContactsIdsAsync(List<long> Ids, bool trackChanges)
         {
-            return FindByCondition(e => !e.IsDeleted && Ids.Contains(e.Id), trackChanges).ToList();
+            return FindByCondition(e => !e.IsDeleted && Ids != null && Ids.Contains(e.Id), trackChanges).ToList();
         }
         #endregion
     }

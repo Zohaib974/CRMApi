@@ -43,6 +43,24 @@ namespace CRMEntities
                 .WithMany(c => c.JobContacts)
                 .HasForeignKey(bc => bc.ContactId);
 
+            //-----Related Contacts many to many
+            //modelBuilder.Entity<RelatedContact>()
+            //    .HasKey(bc => new { bc.RelContactId, bc.ContactId });
+
+            //modelBuilder.Entity<Contact>()
+            //    .HasMany(u => u.RelatedContacts)
+            //    .WithOne(f => f.RelContact)
+            //    .HasForeignKey(f => f.RelContactId);
+
+
+            //modelBuilder.Entity<RelatedContact>()
+            //    .HasOne(bc => bc.Contact)
+            //    .WithMany(b => b.RelatedContacts);
+
+            //modelBuilder.Entity<RelatedContact>()
+            //    .HasOne(bc => bc.RelContact)
+            //    .WithMany(c => c.RelatedContacts);
+
             //modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             //modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());
@@ -57,6 +75,7 @@ namespace CRMEntities
         public DbSet<Activity> Activities { get; set; }
         public DbSet<EventContact> EventContacts { get; set; }
         public DbSet<JobContact> JobContacts { get; set; }
+        public DbSet<RelatedContact> RelatedContacts { get; set; }
 
     }
 }

@@ -39,7 +39,7 @@ namespace CRMRepository
 
         public async Task<Event> GetEventByIdAsync(long EventId, bool trackChanges)
         {
-            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(EventId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(EventId), trackChanges).Include(a=>a.EventContacts).ThenInclude(c=>c.Contact).SingleOrDefaultAsync();
         }
         #region helperMethod
         public void MarkModified(Event Event,UpdateEventDto EventDto)
