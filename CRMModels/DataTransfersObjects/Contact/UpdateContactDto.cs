@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -59,7 +60,7 @@ namespace CRMModels.DataTransfersObjects
         //public string SalesRep { get; set; }
         //public string Source { get; set; }
         //public string Subcontractors { get; set; }
-        //public string RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
         //public string AssignedTeamMembers { get; set; }
         //public string Tags { get; set; }
         public IFormFile File { get; set; }

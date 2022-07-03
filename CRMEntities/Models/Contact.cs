@@ -12,7 +12,7 @@ namespace CRMEntities.Models
         {
             JobContacts = new List<JobContact>();
             EventContacts = new List<EventContact>();
-            //RelatedContacts = new List<RelatedContact>();
+            RelatedContacts = new List<RelatedContact>();
             Jobs = new List<Job>();
             Events = new List<Event>();
         }
@@ -80,7 +80,7 @@ namespace CRMEntities.Models
         public ICollection<Event> Events { get; set; }
         public ICollection<JobContact> JobContacts { get; set; }
         public ICollection<EventContact> EventContacts { get; set; }
-        //public ICollection<RelatedContact> RelatedContacts { get; set; }
+        public ICollection<RelatedContact> RelatedContacts { get; set; }
     }
     public class RelatedContact
     {

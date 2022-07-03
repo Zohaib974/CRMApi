@@ -52,10 +52,11 @@ namespace CRMServices.Implementation
                 {
                     relCtcList.Add(new RelatedContact()
                     {
+                        ContactId = contactEntity.Id,
                         RelContactId = ctc.Id
                     });
                 }
-                //contactEntity.RelatedContacts = relCtcList;
+                contactEntity.RelatedContacts = relCtcList;
 
                 _repositoryManager.Contact.CreateContact(contactEntity);
                 await _repositoryManager.SaveAsync();
@@ -91,11 +92,25 @@ namespace CRMServices.Implementation
                     response.Message = $"Record with Id: {contactDto.Id} not found.";
                     return response;
                 }
+                var contacts = _repositoryManager.Contact.GetContactsIdsAsync(contactDto.RelatedContactIds, false);
                 if (contactDto.ContactStatus != null && (int)contactDto.ContactStatus != contactEntity.Status)
                     contactDto.LastStatusChangeDate = DateTime.UtcNow;
                 _mapper.Map(contactDto, contactEntity);
                 _repositoryManager.Contact.MarkModified(contactEntity, contactDto);
                 contactEntity.SetModificationTracking(LoggedInUserId);
+
+
+                var relCtcList = new List<RelatedContact>();
+                foreach (var ctc in contacts)
+                {
+                    relCtcList.Add(new RelatedContact()
+                    {
+                        ContactId = contactEntity.Id,
+                        RelContactId = ctc.Id
+                    });
+                }
+                contactEntity.RelatedContacts = relCtcList;
+
                 await _repositoryManager.SaveAsync();
                 _mapper.Map(contactEntity, response);
                 response.Successful = true;
@@ -187,6 +202,15 @@ namespace CRMServices.Implementation
                 return response;
             }
             _mapper.Map(contactEntity, response);
+            if (contactEntity.RelatedContacts.Any())
+            {
+                foreach (var jcontact in contactEntity.RelatedContacts)
+                {
+                    var contactDt = new ContactDto();
+                    _mapper.Map(jcontact.RelContact, contactDt);
+                    response.RelatedContct.Add(contactDt);
+                }
+            }
             response.Successful = true;
             response.Message = "Record found successfully.";
             return response;

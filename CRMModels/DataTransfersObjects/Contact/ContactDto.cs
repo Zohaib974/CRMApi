@@ -11,6 +11,7 @@ namespace CRMModels.DataTransfersObjects
     {
         public ContactDto()
         {
+            RelatedContct = new List<ContactDto>();
             SalesRep = "David Miller"; //to be added in future
         }
         public long Id { get; set; }
@@ -53,7 +54,7 @@ namespace CRMModels.DataTransfersObjects
         public string SalesRep { get; set; }
         public string Source { get; set; }
         public string Subcontractors { get; set; }
-        public string RelatedContacts { get; set; }
+        public ICollection<ContactDto> RelatedContct { get; set; }
         public string AssignedTeamMembers { get; set; }
         public string Tags { get; set; }
         public bool? IsImported { get; set; }

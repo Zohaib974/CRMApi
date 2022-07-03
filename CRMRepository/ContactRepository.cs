@@ -38,7 +38,10 @@ namespace CRMRepository
 
         public async Task<Contact> GetContactByIdAsync(long contactId, bool trackChanges)
         {
-            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(contactId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(contactId), trackChanges)
+                .Include(a=>a.RelatedContacts)
+                .ThenInclude(a=>a.RelContact)
+                .SingleOrDefaultAsync();
         }
         public async Task<List<Contact>> GetContactsByCompanyIdAsync(long companyId, bool trackChanges)
         {
