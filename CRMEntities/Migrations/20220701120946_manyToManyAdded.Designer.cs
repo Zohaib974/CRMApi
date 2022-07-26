@@ -4,14 +4,16 @@ using CRMEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRMEntities.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20220701120946_manyToManyAdded")]
+    partial class manyToManyAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -593,21 +595,6 @@ namespace CRMEntities.Migrations
                     b.ToTable("JobContacts");
                 });
 
-            modelBuilder.Entity("CRMEntities.Models.RelatedContact", b =>
-                {
-                    b.Property<long>("RelContactId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContactId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("RelContactId", "ContactId");
-
-                    b.HasIndex("ContactId");
-
-                    b.ToTable("RelatedContacts");
-                });
-
             modelBuilder.Entity("CRMEntities.Models.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -986,25 +973,6 @@ namespace CRMEntities.Migrations
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("CRMEntities.Models.RelatedContact", b =>
-                {
-                    b.HasOne("CRMEntities.Models.Contact", "Contact")
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CRMEntities.Models.Contact", "RelContact")
-                        .WithMany("RelatedContacts")
-                        .HasForeignKey("RelContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contact");
-
-                    b.Navigation("RelContact");
-                });
-
             modelBuilder.Entity("CRMEntities.Models.RoleClaim", b =>
                 {
                     b.HasOne("CRMEntities.Models.UserRole", null)
@@ -1068,8 +1036,6 @@ namespace CRMEntities.Migrations
                     b.Navigation("JobContacts");
 
                     b.Navigation("Jobs");
-
-                    b.Navigation("RelatedContacts");
                 });
 
             modelBuilder.Entity("CRMEntities.Models.Event", b =>

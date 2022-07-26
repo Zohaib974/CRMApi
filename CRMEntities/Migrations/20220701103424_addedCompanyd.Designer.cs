@@ -4,14 +4,16 @@ using CRMEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRMEntities.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20220701103424_addedCompanyd")]
+    partial class addedCompanyd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -459,21 +461,6 @@ namespace CRMEntities.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("CRMEntities.Models.EventContact", b =>
-                {
-                    b.Property<long>("EventId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContactId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("EventId", "ContactId");
-
-                    b.HasIndex("ContactId");
-
-                    b.ToTable("EventContacts");
-                });
-
             modelBuilder.Entity("CRMEntities.Models.Job", b =>
                 {
                     b.Property<long>("Id")
@@ -576,36 +563,6 @@ namespace CRMEntities.Migrations
                     b.HasIndex("PrimaryContactId");
 
                     b.ToTable("Jobs");
-                });
-
-            modelBuilder.Entity("CRMEntities.Models.JobContact", b =>
-                {
-                    b.Property<long>("JobId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContactId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("JobId", "ContactId");
-
-                    b.HasIndex("ContactId");
-
-                    b.ToTable("JobContacts");
-                });
-
-            modelBuilder.Entity("CRMEntities.Models.RelatedContact", b =>
-                {
-                    b.Property<long>("RelContactId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContactId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("RelContactId", "ContactId");
-
-                    b.HasIndex("ContactId");
-
-                    b.ToTable("RelatedContacts");
                 });
 
             modelBuilder.Entity("CRMEntities.Models.RoleClaim", b =>
@@ -933,76 +890,19 @@ namespace CRMEntities.Migrations
             modelBuilder.Entity("CRMEntities.Models.Event", b =>
                 {
                     b.HasOne("CRMEntities.Models.Contact", "Contact")
-                        .WithMany("Events")
+                        .WithMany()
                         .HasForeignKey("ContactId");
 
                     b.Navigation("Contact");
                 });
 
-            modelBuilder.Entity("CRMEntities.Models.EventContact", b =>
-                {
-                    b.HasOne("CRMEntities.Models.Contact", "Contact")
-                        .WithMany("EventContacts")
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CRMEntities.Models.Event", "Event")
-                        .WithMany("EventContacts")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contact");
-
-                    b.Navigation("Event");
-                });
-
             modelBuilder.Entity("CRMEntities.Models.Job", b =>
                 {
                     b.HasOne("CRMEntities.Models.Contact", "PrimaryContact")
-                        .WithMany("Jobs")
+                        .WithMany("RelatedJobs")
                         .HasForeignKey("PrimaryContactId");
 
                     b.Navigation("PrimaryContact");
-                });
-
-            modelBuilder.Entity("CRMEntities.Models.JobContact", b =>
-                {
-                    b.HasOne("CRMEntities.Models.Contact", "Contact")
-                        .WithMany("JobContacts")
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CRMEntities.Models.Job", "Job")
-                        .WithMany("JobContacts")
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contact");
-
-                    b.Navigation("Job");
-                });
-
-            modelBuilder.Entity("CRMEntities.Models.RelatedContact", b =>
-                {
-                    b.HasOne("CRMEntities.Models.Contact", "Contact")
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CRMEntities.Models.Contact", "RelContact")
-                        .WithMany("RelatedContacts")
-                        .HasForeignKey("RelContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contact");
-
-                    b.Navigation("RelContact");
                 });
 
             modelBuilder.Entity("CRMEntities.Models.RoleClaim", b =>
@@ -1061,25 +961,7 @@ namespace CRMEntities.Migrations
 
             modelBuilder.Entity("CRMEntities.Models.Contact", b =>
                 {
-                    b.Navigation("EventContacts");
-
-                    b.Navigation("Events");
-
-                    b.Navigation("JobContacts");
-
-                    b.Navigation("Jobs");
-
-                    b.Navigation("RelatedContacts");
-                });
-
-            modelBuilder.Entity("CRMEntities.Models.Event", b =>
-                {
-                    b.Navigation("EventContacts");
-                });
-
-            modelBuilder.Entity("CRMEntities.Models.Job", b =>
-                {
-                    b.Navigation("JobContacts");
+                    b.Navigation("RelatedJobs");
                 });
 
             modelBuilder.Entity("CRMEntities.Models.UserRole", b =>

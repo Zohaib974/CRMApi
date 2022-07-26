@@ -15,5 +15,7 @@ namespace CRMContracts
         void MarkModified(Contact contact, UpdateContactDto contactDto);
         void CreateContacts(List<Contact> contacts);
         Task<bool> GetContactByNumberAndCreatedBy(string mobileNumber, string officeNumber, string homeNumber, long cretedBy);
+        Task<List<Contact>> GetContactsByCompanyIdAsync(long companyId, bool trackChanges);
+        List<Contact> GetContactsIdsAsync(List<long> Ids, bool trackChanges);
     }
 }

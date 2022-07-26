@@ -8,6 +8,14 @@ namespace CRMEntities.Models
 {
     public class Contact : BaseEntity
     {
+        public Contact()
+        {
+            JobContacts = new List<JobContact>();
+            EventContacts = new List<EventContact>();
+            RelatedContacts = new List<RelatedContact>();
+            Jobs = new List<Job>();
+            Events = new List<Event>();
+        }
         [Required(ErrorMessage = "FirstName name is a required field.")]
         [MaxLength(60, ErrorMessage = "Maximum length for the Name is 60 characters.")]
         public string FirstName { get; set; }
@@ -59,16 +67,26 @@ namespace CRMEntities.Models
         public string Tags { get; set; }
 
         //----------------Relational Fields-------------------------
+        public long? CompanyId { get; set; }
         // ---------------To be configured--------------------------
         public long OfficeLocationId { get; set; }
         public long WorkFlowId { get; set; }
         public long SalesRepId { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
 
         //---------------Navigation properties-----------------------
-        public ICollection<Job> RelatedJobs { get; set; }
-
+        public ICollection<Job> Jobs { get; set; }
+        public ICollection<Event> Events { get; set; }
+        public ICollection<JobContact> JobContacts { get; set; }
+        public ICollection<EventContact> EventContacts { get; set; }
+        public ICollection<RelatedContact> RelatedContacts { get; set; }
+    }
+    public class RelatedContact
+    {
+        public long ContactId { get; set; }
+        public Contact Contact { get; set; }
+        public long RelContactId { get; set; }
+        public Contact RelContact { get; set; }
     }
 }

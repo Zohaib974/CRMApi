@@ -4,14 +4,16 @@ using CRMEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRMEntities.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20220703070248_addedRelatedContact")]
+    partial class addedRelatedContact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -595,15 +597,38 @@ namespace CRMEntities.Migrations
 
             modelBuilder.Entity("CRMEntities.Models.RelatedContact", b =>
                 {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("RelContactId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ContactId")
-                        .HasColumnType("bigint");
+                    b.HasKey("Id");
 
-                    b.HasKey("RelContactId", "ContactId");
-
-                    b.HasIndex("ContactId");
+                    b.HasIndex("RelContactId");
 
                     b.ToTable("RelatedContacts");
                 });
@@ -988,19 +1013,11 @@ namespace CRMEntities.Migrations
 
             modelBuilder.Entity("CRMEntities.Models.RelatedContact", b =>
                 {
-                    b.HasOne("CRMEntities.Models.Contact", "Contact")
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CRMEntities.Models.Contact", "RelContact")
                         .WithMany("RelatedContacts")
                         .HasForeignKey("RelContactId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Contact");
 
                     b.Navigation("RelContact");
                 });

@@ -32,10 +32,11 @@ namespace CRMModels.DataTransfersObjects
         public DateTime? LastStatusChangeDate { get; set; }
         //----------------Relational Fields-------------------------
         public long? ContactId { get; set; }
+        public long? CompanyId { get; set; }
         // ---------------To be configured--------------------------
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
         //public ICollection<Job> RelatedJobs { get; set; }
     }
 }

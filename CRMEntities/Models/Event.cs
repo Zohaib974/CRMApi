@@ -1,5 +1,6 @@
 ﻿using CRMEntities.Base;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,6 +8,10 @@ namespace CRMEntities.Models
 {
     public class Event : BaseEntity
     {
+        public Event()
+        {
+            EventContacts = new List<EventContact>();
+        }
         [Required]
         public int Type { get; set; }
         [Required]
@@ -32,12 +37,20 @@ namespace CRMEntities.Models
         //----------------Relational Fields-------------------------
         [ForeignKey(nameof(Contact))]
         public long? ContactId { get; set; }
+        public long? CompanyId { get; set; }
         // ---------------To be configured--------------------------
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
         //public ICollection<Job> RelatedJobs { get; set; }
         //---------------Navigation properties-----------------------
         public Contact Contact { get; set; }
+        public ICollection<EventContact> EventContacts { get; set; }
+    }
+    public class EventContact
+    {
+        public long ContactId { get; set; }
+        public Contact Contact { get; set; }
+        public long EventId { get; set; }
+        public Event Event { get; set; }
     }
 }

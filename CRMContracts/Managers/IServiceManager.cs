@@ -15,6 +15,7 @@ namespace CRMContracts
         Task<CommonResponse> DeleteContact(long id);
         Task<CommonResponse> ImportContactsAync(List<CreateContactDto> importedContacts);
         Task<ContactDto> GetContactByIdAsync(long id);
+        Task<List<ContactDto>> GetRelatedContacts(long companyId);
         #endregion
         #region Attachment
         Task<CommonResponse> AddAttchmentsAsync(List<CreateAttachmentDto> attachments);

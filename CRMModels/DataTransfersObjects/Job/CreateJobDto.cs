@@ -37,6 +37,7 @@ namespace CRMModels.DataTransfersObjects
         public DateTime? LastActivityDate { get; set; }
         //----------------Relational Fields-------------------------
         public long? PrimaryContactId { get; set; }
+        public long? CompanyId { get; set; }
         // ---------------To be configured in DB--------------------------
         public long OfficeLocationId { get; set; }
         public long WorkFlowId { get; set; }
@@ -45,6 +46,6 @@ namespace CRMModels.DataTransfersObjects
         public long TimelineId { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
-        //public ICollection<Contact> RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
     }
 }

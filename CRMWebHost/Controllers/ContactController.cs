@@ -156,6 +156,12 @@ namespace CRMWebHost.Controllers
             ContactDto response =await _serviceManager.GetContactByIdAsync(Id);
             return response;
         }
+        [HttpGet("getRelatedContact")]
+        public async Task<List<ContactDto>> GetRelatedContact([FromQuery]long companyId)
+        {
+            var response =await _serviceManager.GetRelatedContacts(companyId);
+            return response;
+        }
         #region Private Methods
         private List<CreateContactDto> GetDataFromImportFile(string path)
         {

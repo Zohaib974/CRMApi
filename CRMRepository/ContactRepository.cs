@@ -38,7 +38,14 @@ namespace CRMRepository
 
         public async Task<Contact> GetContactByIdAsync(long contactId, bool trackChanges)
         {
-            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(contactId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(e => !e.IsDeleted && e.Id.Equals(contactId), trackChanges)
+                .Include(a=>a.RelatedContacts)
+                .ThenInclude(a=>a.RelContact)
+                .SingleOrDefaultAsync();
+        }
+        public async Task<List<Contact>> GetContactsByCompanyIdAsync(long companyId, bool trackChanges)
+        {
+            return await FindByCondition(e => !e.IsDeleted && e.CompanyId.Equals(companyId), trackChanges).ToListAsync();
         }
         #region helperMethod
         public void MarkModified(Contact contact,UpdateContactDto contactDto)
@@ -67,6 +74,11 @@ namespace CRMRepository
                                         (numbers.Contains(e.MobileNumber) || numbers.Contains(e.OfficeNumber) || numbers.Contains(e.HomeNumber)) &&
                                         e.CreatedBy == createdBy, false)
                                         .AnyAsync();
+        }
+
+        public List<Contact> GetContactsIdsAsync(List<long> Ids, bool trackChanges)
+        {
+            return FindByCondition(e => !e.IsDeleted && Ids != null && Ids.Contains(e.Id), trackChanges).ToList();
         }
         #endregion
     }

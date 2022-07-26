@@ -67,11 +67,12 @@ namespace CRMModels.DataTransfersObjects
         public IFormFile File { get; set; }
 
         //Relational Entities (To be configured in DB)
+        public long? CompanyId { get; set; }
         public long OfficeLocationId { get; set; }
         public long WorkFlowId { get; set; }
         public long SalesRepId { get; set; }
         public string Subcontractors { get; set; }
-        public string RelatedContacts { get; set; }
+        public List<long> RelatedContactIds { get; set; }
         public string AssignedTeamMembers { get; set; }
     }
 }
