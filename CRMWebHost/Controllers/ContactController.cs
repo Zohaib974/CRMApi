@@ -67,15 +67,15 @@ namespace CRMWebHost.Controllers
         #endregion
         [HttpPost("addContact")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<ContactDto> AddContact(CreateContactDto contact)
+        public async Task<ContactDto> AddContact([FromForm]CreateContactDto contact)
         {
-            //var files = HttpContext.Request.Form.Files;
-            //if (!FileUploadHelper.IsFileExtensionSupported(contact.File))
-            //    return new ContactDto() { Message = "Unsupported file format.Please upload .jpeg file.", Successful = false };
+            var files = HttpContext.Request.Form.Files;
+            if (!FileUploadHelper.IsFileExtensionSupported(contact.File))
+                return new ContactDto() { Message = "Unsupported file format.Please upload .jpeg file.", Successful = false };
 
-            //filePath = Path.Combine("", _hostingEnvironment.ContentRootPath + profileImgeDirectory);
-            //var path = FileUploadHelper.UploadFiles(filePath, contact.File, "Image_", _logger, out isUploadedSuccessfully);
-            contact.ProfileImageLink = "";
+            filePath = Path.Combine("", _hostingEnvironment.ContentRootPath + profileImgeDirectory);
+            var path = FileUploadHelper.UploadFiles(filePath, contact.File, "Image_", _logger, out isUploadedSuccessfully);
+            contact.ProfileImageLink = path;
             var response = await _serviceManager.CreateContactAsync(contact);
             return response;
         }
