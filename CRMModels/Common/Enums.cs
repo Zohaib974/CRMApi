@@ -39,4 +39,11 @@ namespace CRMModels.Common
         NotAssigned = 0,
         Task = 1
     }
+    public enum TableType
+    {
+        NotAssigned = 0,
+        Contacts = 1,
+        Jobs = 2,
+        Events =3
+    }
 }

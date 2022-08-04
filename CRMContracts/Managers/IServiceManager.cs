@@ -44,6 +44,9 @@ namespace CRMContracts
         Task<CommonResponse> DeleteWorkOrder(long id);
         Task<WorkOrderDto> GetWorkOrderByIdAsync(long id);
         #endregion
-
+        #region UserColumns
+        Task<CommmonListResponse<UserColumnDto>> CreateUserColumnsAsync(List<CreateUserColumnDto> userColumn);
+        Task<List<UserColumnDto>> GetUserColumnsAsync(UserColumnRequest requestParameterss);
+        #endregion
     }
 }

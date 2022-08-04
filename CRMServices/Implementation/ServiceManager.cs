@@ -685,5 +685,68 @@ namespace CRMServices.Implementation
             return response;
         }
         #endregion
+        #region UserColumns
+        public async Task<CommmonListResponse<UserColumnDto>> CreateUserColumnsAsync(List<CreateUserColumnDto> userColumns)
+        {
+            var response = new CommmonListResponse<UserColumnDto>(null);
+            try
+            {
+                int tableType = 0;
+                //Get table type
+                if(userColumns!= null && userColumns.Any())
+                {
+                    tableType = (int)userColumns.Select(a => a.TableName).FirstOrDefault();
+                }
+                //Remove existing col selection
+                var existingRecords =await _repositoryManager.UserColumn.GetUserColumnsByUserIdAsync(LoggedInUserId, tableType, true);
+                if (existingRecords.Any())
+                {
+                    foreach (var entity in existingRecords)
+                    {
+                        entity.IsDeleted = true;
+                        entity.DeletedOn = DateTime.Now;
+                        entity.DeletedBy = LoggedInUserId;
+                        entity.SetModificationTracking(LoggedInUserId);
+                    }
+                    await _repositoryManager.SaveAsync();
+                }
+                //Add new entries
+                var entities = _mapper.Map<List<UserColumn>>(userColumns);
+                if(entities != null && entities.Any())
+                {
+                    foreach (var entity in entities)
+                    {
+                        entity.CreatedBy = LoggedInUserId;
+                        entity.TableType = tableType;
+                        entity.UserId = LoggedInUserId;
+                    }
+                }
+                _repositoryManager.UserColumn.CreateUserColumns(entities);
+                await _repositoryManager.SaveAsync();
+                var list = _mapper.Map<List<UserColumnDto>>(entities);
+                response = new CommmonListResponse<UserColumnDto>(list);
+                response.Successful = true;
+                response.Message = "Usercolumns created successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.Successful = false;
+                response.Message = "Usercolumns creation failed.Error : " + ex.Message;
+                _logger.LogError("Method CreateUserColumnsAsync:Error while ceating Usercolumns.Error : " + ex.ToString());
+            }
+            return response;
+        }
+        public async Task<List<UserColumnDto>> GetUserColumnsAsync(UserColumnRequest requestParameters)
+        {
+            var response = new List<UserColumnDto>();
+            var entity =await _repositoryManager.UserColumn.GetUserColumnsByUserIdAsync(LoggedInUserId,(int)requestParameters.TableName, false);
+            if (entity == null)
+            {
+                return response;
+            }
+            _mapper.Map(entity, response);
+            return response;
+        }
+        #endregion
     }
 }

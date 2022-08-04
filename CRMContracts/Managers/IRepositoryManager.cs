@@ -12,6 +12,7 @@ namespace CRMContracts
         IEventRepository Event { get; }
         IWorkOrderRepository WorkOrder { get; }
         IActivityRepository Activity { get; }
+        IUserColumnRepository UserColumn { get; }
         Task<int> SaveAsync();
     }
 }

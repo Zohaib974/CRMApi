@@ -40,6 +40,9 @@ namespace CRMWebHost.Configurations
             CreateMap<UpdateEventDto, Event>();
             CreateMap<Event, EventDto>();
 
+            CreateMap<CreateUserColumnDto, UserColumn>();
+            CreateMap<UserColumn, UserColumnDto>();
+
         }
     }
 }

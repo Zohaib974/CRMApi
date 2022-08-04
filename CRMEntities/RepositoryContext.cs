@@ -67,6 +67,7 @@ namespace CRMEntities
         public DbSet<EventContact> EventContacts { get; set; }
         public DbSet<JobContact> JobContacts { get; set; }
         public DbSet<RelatedContact> RelatedContacts { get; set; }
+        public DbSet<UserColumn> UserColumns { get; set; }
 
     }
 }
