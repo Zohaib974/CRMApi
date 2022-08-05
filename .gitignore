@@ -22,3 +22,5 @@
 /CRMModels/obj
 /CRMHelper/obj
 /CRMHelper/bin/Debug/netcoreapp3.1
+/CRMWebHost/Files/Attachment
+/CRMWebHost/Files/ProfileImages
