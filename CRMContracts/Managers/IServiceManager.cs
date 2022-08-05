@@ -45,7 +45,7 @@ namespace CRMContracts
         Task<WorkOrderDto> GetWorkOrderByIdAsync(long id);
         #endregion
         #region UserColumns
-        Task<CommmonListResponse<UserColumnDto>> CreateUserColumnsAsync(List<CreateUserColumnDto> userColumn);
+        Task<ListResponse<UserColumnDto>> CreateUserColumnsAsync(List<CreateUserColumnDto> userColumn);
         Task<List<UserColumnDto>> GetUserColumnsAsync(UserColumnRequest requestParameterss);
         #endregion
     }

@@ -38,7 +38,7 @@ namespace CRMWebHost.Controllers
         }
         [HttpPost("addUserColumns")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<CommmonListResponse<UserColumnDto>> AddUserColumns(List<CreateUserColumnDto> request)
+        public async Task<ListResponse<UserColumnDto>> AddUserColumns(List<CreateUserColumnDto> request)
         {
             var response =await _serviceManager.CreateUserColumnsAsync(request);
             return response;

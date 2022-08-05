@@ -686,9 +686,9 @@ namespace CRMServices.Implementation
         }
         #endregion
         #region UserColumns
-        public async Task<CommmonListResponse<UserColumnDto>> CreateUserColumnsAsync(List<CreateUserColumnDto> userColumns)
+        public async Task<ListResponse<UserColumnDto>> CreateUserColumnsAsync(List<CreateUserColumnDto> userColumns)
         {
-            var response = new CommmonListResponse<UserColumnDto>(null);
+            var response = new ListResponse<UserColumnDto>(null);
             try
             {
                 int tableType = 0;
@@ -724,7 +724,7 @@ namespace CRMServices.Implementation
                 _repositoryManager.UserColumn.CreateUserColumns(entities);
                 await _repositoryManager.SaveAsync();
                 var list = _mapper.Map<List<UserColumnDto>>(entities);
-                response = new CommmonListResponse<UserColumnDto>(list);
+                response.items =list;
                 response.Successful = true;
                 response.Message = "Usercolumns created successfully.";
             }

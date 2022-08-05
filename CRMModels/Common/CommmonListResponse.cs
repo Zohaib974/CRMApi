@@ -23,4 +23,5 @@ namespace CRMModels.Common
         public bool Successful { get; set; } = true;
         public string Message { get; set; }
     }
+
 }
