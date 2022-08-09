@@ -79,7 +79,16 @@ namespace CRMWebHost
                 // enables immediate logout, after updating the user's stat.
                 options.ValidationInterval = TimeSpan.Zero;
             });
-            services.AddAutoMapper(typeof(Startup));
+            services.Configure<CookiePolicyOptions>(options =>
+                {
+                    options.CheckConsentNeeded = context => true;            
+                });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+            });
+;           services.AddAutoMapper(typeof(Startup));
             services.AddControllers(config =>
             {
                 config.CacheProfiles.Add("120SecondsDuration", new CacheProfile
@@ -110,6 +119,7 @@ namespace CRMWebHost
             app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseCors("CorsPolicy");
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

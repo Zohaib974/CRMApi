@@ -43,6 +43,9 @@ namespace CRMWebHost.Configurations
             CreateMap<CreateUserColumnDto, UserColumn>();
             CreateMap<UserColumn, UserColumnDto>();
 
+            CreateMap<CreateWorkOrderDto, WorkOrder>();
+            CreateMap<UpdateWorkOrderDto, WorkOrder>();
+            CreateMap<WorkOrder, WorkOrderDto>();
         }
     }
 }

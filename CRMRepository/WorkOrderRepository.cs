@@ -28,8 +28,11 @@ namespace CRMRepository
         }
         public PagedList<WorkOrder> GetWorkOrders(WorkOrderParameters workOrderParameters, bool trackChanges = false)
         {
-            var events = FindByCondition(e => !e.IsDeleted && (e.ContactId != null
-                                    && e.ContactId.Value == workOrderParameters.ContactId), trackChanges)
+            var events = FindByCondition(e => !e.IsDeleted &&
+            workOrderParameters.ReferenceType == CRMModels.Common.TableType.Contacts ?
+            ((e.ContactId != null && e.ContactId.Value == workOrderParameters.ReferenceId)) :
+            ((e.JobId != null && e.JobId.Value == workOrderParameters.ReferenceId)),
+            trackChanges)
                                     .Search(workOrderParameters.SearchBy, workOrderParameters.SearchTerm)
                                     .Sort(workOrderParameters.OrderBy)
                                     .ToList();

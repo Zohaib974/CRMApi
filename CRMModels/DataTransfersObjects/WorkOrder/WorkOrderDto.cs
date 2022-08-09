@@ -25,6 +25,14 @@ namespace CRMModels.DataTransfersObjects
             }
         }
         public int Status { get; set; }
+        public TableType ReferenceType
+        {
+            get
+            {
+                return (TableType)ReferenceTable;
+            }
+        }
+        public int ReferenceTable { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime DueDate { get; set; }

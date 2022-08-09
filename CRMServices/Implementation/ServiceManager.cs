@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace CRMServices.Implementation
 {
@@ -21,13 +23,16 @@ namespace CRMServices.Implementation
         private readonly IRepositoryManager _repositoryManager;
         public long LoggedInUserId;
         public long LoggedInUserCompanyId;
-        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, ILoggerManager logger)
+        IHttpContextAccessor _httpContextAccessor;
+
+        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, ILoggerManager logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _mapper = mapper;
             _repositoryManager = repositoryManager;
-            LoggedInUserId = 1;
-            LoggedInUserCompanyId = 1;
+            _httpContextAccessor = httpContextAccessor;
+            LoggedInUserId = string.IsNullOrEmpty(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value) ? 0 : long.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            LoggedInUserCompanyId = string.IsNullOrEmpty(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value) ? 1 : long.Parse(_httpContextAccessor.HttpContext.User.FindFirst("CompanyId").Value);
         }
         #endregion
         #region Contact
@@ -588,6 +593,7 @@ namespace CRMServices.Implementation
                 var entity = _mapper.Map<WorkOrder>(addDto);
                 entity.Priority = (int)addDto.WorkOrderPriority;
                 entity.Status = (int)addDto.WorkOrderStatus;
+                entity.ReferenceTable = (int)addDto.ReferenceType;
                 entity.CreatedBy = LoggedInUserId;
                 _repositoryManager.WorkOrder.CreateWorkOrder(entity);
                 await _repositoryManager.SaveAsync();

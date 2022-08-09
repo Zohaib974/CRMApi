@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace CRMWebHost.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [ApiExplorerSettings(GroupName = "v1")]
     [Route("api/jobs")]
@@ -37,7 +37,7 @@ namespace CRMWebHost.Controllers
     {
         #region declarations
         private readonly IServiceManager _serviceManager;
-        public JobController(IServiceManager serviceManager)
+        public JobController(IServiceManager serviceManager, UserManager<User> userManager) : base(userManager)
         {
             _serviceManager = serviceManager;
         }

@@ -47,7 +47,7 @@ namespace CRMWebHost.Controllers
         public AttachmentController(IRepositoryManager repository, ILoggerManager logger,
                                     IServiceManager serviceManager, IMapper mapper,
                                     IHostingEnvironment hostingEnvironment, IConfiguration configuration,
-                                     IEmailService emailService, UserManager<User> userManager)
+                                     IEmailService emailService, UserManager<User> userManager) : base(userManager)
         {
             _repository = repository;
             _logger = logger;

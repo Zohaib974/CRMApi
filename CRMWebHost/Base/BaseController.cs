@@ -29,6 +29,28 @@ namespace CRMWebHost.Base
 {
     public class BaseController : Controller
     {
-     
+        private readonly UserManager<User> _userManager;
+        public BaseController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+        public long LoggedInUserId
+        {
+            get
+            {
+                var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return string.IsNullOrEmpty(id) ? 0 : long.Parse(id);
+            }
+        }
+        public long LoggedInUserCompanyId
+        {
+            get
+            {
+                var id = User.FindFirstValue("CompanyId");
+                return string.IsNullOrEmpty(id) ? 0 : long.Parse(id);
+            }
+        }
+
+
     }
 }
