@@ -1,9 +1,11 @@
 ﻿using CRMContracts;
+using CRMEntities.Models;
 using CRMModels;
 using CRMModels.Common;
 using CRMModels.DataTransfersObjects;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Base;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,7 +20,7 @@ namespace CRMWebHost.Controllers
     {
         #region declarations
         private readonly IServiceManager _serviceManager;
-        public EventController(IServiceManager serviceManager)
+        public EventController(IServiceManager serviceManager, UserManager<User> userManager) : base(userManager)
         {
             _serviceManager = serviceManager;
         }

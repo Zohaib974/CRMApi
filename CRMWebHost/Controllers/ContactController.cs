@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace CRMWebHost.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [ApiExplorerSettings(GroupName = "v1")]
     [Route("api/contacts")]
@@ -50,7 +50,7 @@ namespace CRMWebHost.Controllers
         public ContactController(IRepositoryManager repository, ILoggerManager logger,
                                     IServiceManager serviceManager, IMapper mapper,
                                     IHostingEnvironment hostingEnvironment, IConfiguration configuration,
-                                    UserManager<User> userManager)
+                                    UserManager<User> userManager) : base(userManager)
         {
             _repository = repository;
             _logger = logger;

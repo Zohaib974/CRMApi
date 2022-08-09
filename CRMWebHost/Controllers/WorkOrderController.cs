@@ -1,24 +1,27 @@
 ﻿using CRMContracts;
+using CRMEntities.Models;
 using CRMModels;
 using CRMModels.Common;
 using CRMModels.DataTransfersObjects;
 using CRMWebHost.ActionFilters;
 using CRMWebHost.Base;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace CRMWebHost.Controllers
 {
-    //[Authorize]
-    [ApiVersion("2.0")]
-    [ApiExplorerSettings(GroupName = "v2")]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [ApiExplorerSettings(GroupName = "v1")]
     [Route("api/workOrders")]
     [ApiController]
     public class WorkOrderController : BaseController
     {
         #region declarations
         private readonly IServiceManager _serviceManager;
-        public WorkOrderController(IServiceManager serviceManager)
+        public WorkOrderController(IServiceManager serviceManager, UserManager<User> userManager) : base(userManager)
         {
             _serviceManager = serviceManager;
         }

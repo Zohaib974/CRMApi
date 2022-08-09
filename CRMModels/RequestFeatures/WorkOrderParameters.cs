@@ -1,4 +1,6 @@
-﻿namespace CRMModels
+﻿using CRMModels.Common;
+
+namespace CRMModels
 {
     public class WorkOrderParameters : RequestParameters
     {
@@ -7,6 +9,7 @@
             OrderBy = "id";
             SearchBy = "name";
         }
-        public long ContactId { get; set; }
+        public long ReferenceId { get; set; }
+        public TableType ReferenceType { get; set; }
     }
 }

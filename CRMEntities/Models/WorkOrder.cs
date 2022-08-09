@@ -11,6 +11,8 @@ namespace CRMEntities.Models
         public int Priority { get; set; }
         [Required]
         public int Status { get; set; }
+        [Required]
+        public int ReferenceTable { get; set; }
         [MaxLength(50)]
         [Required]
         public string Name { get; set; }
@@ -24,11 +26,14 @@ namespace CRMEntities.Models
         //----------------Relational Fields-------------------------
         [ForeignKey(nameof(Contact))]
         public long? ContactId { get; set; }
+        [ForeignKey(nameof(Job))]
+        public long? JobId { get; set; }
         // ---------------To be configured--------------------------
         //public ICollection<LineItem> LineItems { get; set; }
         //public ICollection<AssignedTeamMember> AssignedTeamMembers { get; set; }
         //public ICollection<Subcontractor> Subcontractors { get; set; }
         //---------------Navigation properties-----------------------
         public Contact Contact { get; set; }
+        public Job Job { get; set; }
     }
 }
